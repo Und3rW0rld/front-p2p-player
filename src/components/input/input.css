@@ -1,0 +1,40 @@
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+        font-size: 1.75rem;
+        font-weight: 500;
+        color: var(--secondary-color);
+    }
+    .input {
+        position: relative;
+
+        input {
+            width: 100%;
+            padding: 0.5rem 2.5rem 0.5rem 0.5rem; /* Agrega espacio a la derecha para el icono */
+            font-size: 1.75rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            background-color: transparent;
+            color: var(--secondary-color);
+        }
+
+        input::placeholder {
+            color: var(--tertiary-color); /* 50% opacidad */
+            opacity: 0.5; /* Esto ajusta la opacidad del placeholder */
+        }
+
+        .icon {
+            object-fit: cover;
+            position: absolute;
+            right: 0.75rem; /* Ajusta la posición horizontal del icono */
+            top: 50%; /* Centra el icono verticalmente */
+            transform: translateY(-50%);
+            cursor: pointer;
+            width: 1.5rem; /* Tamaño del icono */
+            height: 1.5rem;
+        }
+    }
+}

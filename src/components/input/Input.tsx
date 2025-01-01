@@ -1,5 +1,7 @@
 import './input.css'
-
+import HidePwd from "../../assets/icons/hide-pwd.svg"
+import ShowPwd from "../../assets/icons/show-pwd.svg"
+import { useState } from 'react';
 
 interface InputProps {
   label: string;
@@ -9,17 +11,32 @@ interface InputProps {
 
 const Input = ({ label, placeholder, is_password }: InputProps) => {
 
-  const id = label.replace(/\s+/g, '-').toLowerCase();
+  const id = label.replace(/\s+/g, '-').toLowerCase()+Math.random().toString(36).substring(7);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPwd = () => {
+    setShowPassword(!showPassword);
+    document.getElementById(id)?.setAttribute('type', showPassword ? 'password' : 'text');
+  }
+
   
   return (
     <>
-    
-    <label htmlFor={id}>{label}</label>
-    <input
-      type={is_password ? 'password' : 'text'}
-      id={id}
-      placeholder={placeholder}
-    />
+    <div className='input-container'>
+        <label htmlFor={id}>{label}</label>
+        <div className='input'>
+        <input
+        type={is_password ? 'password' : 'text'}
+        id={id}
+        placeholder={placeholder}
+        />{
+            is_password && <img onClick={ handleShowPwd } draggable="false" className='icon' src={ showPassword ? ShowPwd : HidePwd } alt="Hide password" /> 
+        }
+        
+        </div>
+        
+    </div>
     </>
   )
 }
