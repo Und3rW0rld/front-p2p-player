@@ -15,4 +15,8 @@
   --primary-color: #0489E0;
   --secondary-color: #FFFFFF;
   --tertiary-color: #ACB8D4;
+  --quaternary-color: #047494;
+  --primary-color-opacity: 4, 137, 224;
+  --secondary-color-opacity: 255, 255, 255;
+  --quaternary-color-opacity: 4, 116, 148;
 }
