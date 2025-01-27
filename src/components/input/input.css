@@ -38,3 +38,30 @@
         }
     }
 }
+
+
+@media screen and (max-width: 768px) {
+    .input-container {
+        .input {
+            input {
+                font-size: 1.5rem;
+            }
+            input::placeholder {
+                font-size: 1.5rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .input-container {
+        .input {
+            input {
+                font-size: 1.25rem;
+            }
+            input::placeholder {
+                font-size: 1.25rem;
+            }
+        }
+    }
+}
