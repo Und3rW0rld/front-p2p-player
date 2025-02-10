@@ -24,6 +24,9 @@ const UserPage = () => {
                     <img src= {BannerMockImg} alt = "Banner"/>
                 </div>
             </div>
+            <div className="top-user-songs">
+                
+            </div>
         </div>
         </>
     )
