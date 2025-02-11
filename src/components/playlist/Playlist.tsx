@@ -25,7 +25,7 @@ const Playlist: React.FC<PlaylistProps> = ({
           <h4>{name}</h4>
           <div className="bottom-info">
             <p>Songs: {songCount}</p>
-            <img src={EditSquare} alt="Edit icon" />
+            {expanded && <img src={EditSquare} alt="Edit icon" />}
           </div>
         </div>
       </div>

@@ -5,7 +5,6 @@
   padding: 1.313rem;
   gap: 1.313rem;
   width: 15.375rem;
-
   .playlist-img {
     img {
       object-fit: cover;
@@ -54,7 +53,6 @@
 
 .expanded {
   flex-direction: column;
-
   .playlist-img {
     img {
       border: solid 2px rgba(var(--primary-color-opacity), 0.4);
