@@ -1,21 +1,26 @@
 .main-page-container {
   padding: 1rem 6.25rem;
+  overflow: hidden;
+  .main-title {
+    color: var(--secondary-color);
+    font-size: 2.188rem;
+    font-weight: 700;
+    font-weight: normal;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
   .main-page-header {
+    display: flex;
+    justify-content: space-between;
+
     .left {
       display: flex;
       gap: 2rem;
       align-items: center;
-      .main-title {
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: var(--secondary-color);
-        font-size: 2.188rem;
-        font-weight: 700;
-        font-weight: normal;
-      }
+
       img {
         cursor: pointer;
       }
@@ -25,5 +30,14 @@
     display: flex;
     padding: 2rem 0;
     gap: 3.625rem;
+  }
+
+  .songs-container {
+    .header-songs {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      padding: 1rem 0;
+    }
   }
 }
