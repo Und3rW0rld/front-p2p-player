@@ -1,0 +1,29 @@
+.main-page-container {
+  padding: 1rem 6.25rem;
+
+  .main-page-header {
+    .left {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      .main-title {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--secondary-color);
+        font-size: 2.188rem;
+        font-weight: 700;
+        font-weight: normal;
+      }
+      img {
+        cursor: pointer;
+      }
+    }
+  }
+  .playlists-container {
+    display: flex;
+    padding: 2rem 0;
+    gap: 3.625rem;
+  }
+}

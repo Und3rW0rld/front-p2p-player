@@ -1,0 +1,36 @@
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  background-color: rgba(var(--secondary-color-opacity), 0.05);
+  border: solid 1px rgba(var(--primary-color-opacity), 0.2);
+  border-radius: 10px;
+  padding-right: 2rem;
+  height: 3.3rem;
+  label {
+    img {
+      margin: 0.625rem 0.875rem;
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+  }
+
+  input {
+    background-color: transparent;
+    border: none;
+    height: 100%;
+    width: 100%;
+    color: var(--secondary-color);
+    font-size: 1.125rem;
+  }
+  input::placeholder {
+    color: rgba(var(--primary-color-opacity));
+    font-size: 1.125rem;
+  }
+
+  input:focus {
+    outline: none;
+  }
+  input:focus::placeholder {
+    color: transparent; /* Hace que el texto del placeholder sea transparente */
+  }
+}
