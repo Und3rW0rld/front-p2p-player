@@ -4,7 +4,7 @@ import UserProfMockImg from '../../assets/img/userProfilePicMock.jpg'
 import EditButtonSVG from "../../assets/icons/edit-pwd.svg"
 
 import TopSongs from "./components/TopSongs.tsx"; 
-
+import UserPlaylists from "./components/UserPlaylists.tsx"; 
 var userName:string = "YOUR_USERNAME";
 var userDescription = "Me gusta el pop polaco"
 
@@ -35,6 +35,16 @@ const UserPage = () => {
                 </h1>
                 <TopSongs />
             </div>
+
+            <div className="user-playlists-container">
+                <UserPlaylists userName={userName}/>
+            </div>
+
+            <div className="user-songs">
+                <h1></h1>
+                
+            </div>
+
         </div>
         
         </>
