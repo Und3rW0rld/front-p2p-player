@@ -1,0 +1,93 @@
+.top-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+}
+
+.top-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background-color: rgba(var(--primary-color-opacity), 0.05);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  --dynamic-color: 100, 100, 100; /* Default fallback */
+
+  box-shadow: 0 0 10px 0px rgba(var(--quaternary-color-opacity), 0.4);
+  border-radius: 6px;
+  border: var(--primary-color) solid 1px;
+  position: relative; /* Add this to establish stacking context */
+}
+
+.top-item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(var(--quaternary-color-opacity), 0.7);
+}
+
+.top-item img {
+  width: 90%;
+  aspect-ratio: 1/1.05;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  object-fit: cover;
+  position: relative;
+  z-index: 1; /* Lower z-index for image */
+}
+
+/* Fix: Song name should appear above image shadow */
+.top-item .song-name {
+  padding-bottom: 10px;
+  position: relative;
+  z-index: 3; /* Higher z-index for the song name */
+}
+
+.top-item .song-title {
+  font-size: 2rem;
+  font-weight: normal;
+  color: white;
+  position: relative;
+  z-index: 2; /* Text above image */
+}
+
+.top-item .song-author {
+  font-size: 1.4rem;
+  font-weight: lighter;
+  color: white;
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 2; /* Text above image */
+}
+
+/* Specific styles using nth-child */
+.top-item:nth-child(1) {
+  height: 95%;
+  width: 30%;
+}
+
+.top-item:nth-child(1) img {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+}
+
+.top-item:nth-child(2) {
+  height: 100%;
+  width: 30%;
+}
+
+.top-item:nth-child(2) img {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+}
+
+.top-item:nth-child(3) {
+  height: 95%;
+  width: 30%;
+}
+
+.top-item:nth-child(3) img {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+}

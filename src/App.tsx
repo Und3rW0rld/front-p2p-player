@@ -3,6 +3,7 @@ import "./App.css";
 import Login from "./views/Login/Login";
 import Register from "./views/Register/Register";
 import Main from "./views/MainPage/Main";
+import UserPage from './views/UserView/UserPage'
 function App() {
   return (
     <>
@@ -11,7 +12,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/main" element={<Main />} />
-        </Routes>
+          <Route path="/userPage" element={<UserPage />} />
+      </Routes>
       </BrowserRouter>
     </>
   );
