@@ -2,15 +2,16 @@ import "./userPage.css"
 import BannerMockImg from '../../assets/img/userPageBannerMock.gif'
 import UserProfMockImg from '../../assets/img/userProfilePicMock.jpg'
 import EditButtonSVG from "../../assets/icons/edit-pwd.svg"
+import songs from "../../assets/mocks/songs.json";
 
 import TopSongs from "./components/TopSongs.tsx"; 
 import UserPlaylists from "./components/UserPlaylists.tsx"; 
+import SongTable from "./components/SongTable.tsx";
+
 var userName:string = "YOUR_USERNAME";
 var userDescription = "Me gusta el pop polaco"
 
-
 const UserPage = () => {
-
     return (
         <>
         <div className = "user-page-container">
@@ -41,12 +42,13 @@ const UserPage = () => {
             </div>
 
             <div className="user-songs">
-                <h1></h1>
-                
+                <h1>
+                    {userName} SONGS
+                    
+                </h1>
+                <SongTable songs={songs} />
             </div>
-
         </div>
-        
         </>
     )
 }

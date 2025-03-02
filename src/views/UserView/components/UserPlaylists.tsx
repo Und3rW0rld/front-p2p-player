@@ -40,7 +40,7 @@ const UserPlaylists = ({ userName}: UserProfileProps) => {
               <img
                 src={Expand}
                 alt=""
-                style={{ transform: expand ? "" : "rotate(180deg)" }}
+                style={{ transform: expand ? "rotate(180deg)" : "" }}
               />
                 <pre>  {userName} PLAYLISTS</pre>
 

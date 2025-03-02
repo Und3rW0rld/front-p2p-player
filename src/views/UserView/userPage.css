@@ -100,3 +100,7 @@
 .edit-icon:hover {
   transform: scale(1.1); /* Slight increase on hover */
 }
+
+.user-songs {
+  padding-top: 8vh;
+}
