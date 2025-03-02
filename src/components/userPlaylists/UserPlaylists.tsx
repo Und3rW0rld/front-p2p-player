@@ -1,7 +1,7 @@
 import "./userPlaylists.css";
-import Playlist from "../../../components/playlist/Playlist";
-import Expand from "../../../assets/icons/polygon.svg";
-import playlists from "../../../assets/mocks/playlist.json";
+import Playlist from "../playlist/Playlist";
+import Expand from "../../assets/icons/polygon.svg";
+import playlists from "../../assets/mocks/playlist.json";
 import { useState } from "react";
 
 interface UserProfileProps {

@@ -1,7 +1,7 @@
 import "./topSongs.css";
-import Song1Img from "../../../assets/img/DuvetBoa.jpg";
-import Song2Img from "../../../assets/img/BaileInolvidable.jpg";
-import Song3Img from "../../../assets/img/LostKitten.jpg";
+import Song1Img from "../../assets/img/DuvetBoa.jpg";
+import Song2Img from "../../assets/img/BaileInolvidable.jpg";
+import Song3Img from "../../assets/img/LostKitten.jpg";
 
 const TopSongs = () => {
   var songs = [

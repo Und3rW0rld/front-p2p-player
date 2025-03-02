@@ -4,9 +4,9 @@ import UserProfMockImg from '../../assets/img/userProfilePicMock.jpg'
 import EditButtonSVG from "../../assets/icons/edit-pwd.svg"
 import songs from "../../assets/mocks/songs.json";
 
-import TopSongs from "./components/TopSongs.tsx"; 
-import UserPlaylists from "./components/UserPlaylists.tsx"; 
-import SongTable from "./components/SongTable.tsx";
+import TopSongs from "../../components/topSongs/TopSongs.tsx"; 
+import UserPlaylists from "../../components/userPlaylists/UserPlaylists.tsx"; 
+import SongTable from "../../components/songTable/SongTable.tsx";
 
 var userName:string = "YOUR_USERNAME";
 var userDescription = "Me gusta el pop polaco"
