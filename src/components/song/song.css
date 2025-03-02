@@ -1,0 +1,37 @@
+.song {
+  touch-action: none;
+  color: var(--quinary-color);
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.4rem;
+
+  .song-name {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    img {
+      width: 3rem;
+      border-radius: 2px;
+    }
+    p {
+      font-size: 1.125rem;
+      min-width: 2rem;
+    }
+  }
+  .artist-name {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  .album-name {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .duration {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+}
