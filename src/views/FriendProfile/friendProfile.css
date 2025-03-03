@@ -1,0 +1,25 @@
+.friends-page-container {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 4rem;
+
+  h1 {
+    padding: 1rem;
+    color: var(--secondary-color);
+    font-weight: normal;
+    font-size: 2.5em;
+  }
+  h2 {
+    color: var(--secondary-color);
+    font-weight: normal;
+    font-size: 2.2em;
+  }
+  h3 {
+    color: var(--tertiary-color);
+    font-weight: lighter;
+  }
+}

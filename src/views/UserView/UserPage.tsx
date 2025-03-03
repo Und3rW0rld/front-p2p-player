@@ -7,6 +7,7 @@ import songs from "../../assets/mocks/songs.json";
 import TopSongs from "../../components/topSongs/TopSongs.tsx"; 
 import UserPlaylists from "../../components/userPlaylists/UserPlaylists.tsx"; 
 import SongTable from "../../components/songTable/SongTable.tsx";
+import UserProfile from "../../components/userProfile/UserProfile.tsx";
 
 var userName:string = "YOUR_USERNAME";
 var userDescription = "Me gusta el pop polaco"
@@ -15,20 +16,11 @@ const UserPage = () => {
     return (
         <>
         <div className = "user-page-container">
-            <div className="user-profile-container">
-                <div className="user-profile-left">
-                    <img src = {EditButtonSVG} className="edit-icon"/>
-                    <div className = "user-data">
-                        <img src= {UserProfMockImg} alt = "Profile picture"/>
-                        <h2 className="user-name"> {userName}</h2>
-                        <h3 className="user-description">{userDescription}</h3>
-                    </div>
-                    <div className="edit-icon"></div>
-                </div>
-                <div className="user-profile-right">
-                    <img src= {BannerMockImg} alt = "Banner"/>
-                </div>
-            </div>
+            <UserProfile name={userName} 
+                description={userDescription} 
+                image={UserProfMockImg}
+                banner={BannerMockImg}/>
+
             <div className="top-songs-container">
                 <h1 >
                     {userName} TOP 3 SONGS
