@@ -3,6 +3,7 @@ import BannerMockImg from '../../assets/img/userPageBannerMock.gif'
 import UserProfMockImg from '../../assets/img/userProfilePicMock.jpg'
 import EditButtonSVG from "../../assets/icons/edit-pwd.svg"
 import songs from "../../assets/mocks/songs.json";
+import topSongs from "../../assets/mocks/userTopSongs.json";
 
 import TopSongs from "../../components/topSongs/TopSongs.tsx"; 
 import UserPlaylists from "../../components/userPlaylists/UserPlaylists.tsx"; 
@@ -26,7 +27,7 @@ const UserPage = () => {
                     {userName} TOP 3 SONGS
                     <img src = {EditButtonSVG} className="edit-icon"/>
                 </h1>
-                <TopSongs />
+                <TopSongs topSongs={topSongs}/>
             </div>
 
             <div className="user-playlists-container">
