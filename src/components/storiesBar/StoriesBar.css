@@ -1,0 +1,57 @@
+.stories-bar-container {
+  position: relative;
+  top: auto;
+  left: auto;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.stories-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.story-text {
+  font-size: 12px;
+  color: var(--secondary-color);
+  margin-top: 5px;
+}
+
+.story-divider {
+  width: 1px;
+  height: 80px;
+  background-color: var(--primary-color);
+  margin: 0 8px;
+}
+
+.avatar-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.add-story-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 1.7rem;
+    height: 1.7rem;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    padding: 0.2rem;
+    opacity: 0.75;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}

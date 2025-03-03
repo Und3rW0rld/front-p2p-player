@@ -5,6 +5,8 @@ import playlists from "../../assets/mocks/playlist.json";
 import AddPlaylist from "../../assets/icons/add-playlists.svg";
 import { useState } from "react";
 import SearchBar from "../../components/search-bar/SearchBar";
+import StoriesBar from "../../components/storiesBar/StoriesBar";
+
 import {
   closestCorners,
   DndContext,
@@ -80,6 +82,7 @@ const Main = () => {
 
   return (
     <>
+      <StoriesBar />
       <div className="main-page-container">
         <div className="main-page-header">
           <div className="left">
