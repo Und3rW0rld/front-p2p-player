@@ -26,9 +26,7 @@ const FriendProfilePage = () => {
             image={UserProfMockImg}
             banner={BannerMockImg}/>
             
-        </div>
-
-        <div className="top-songs-container">
+            <div className="top-songs-container">
                 <h1 >
                     {userName} TOP 3 SONGS
                     <img src = {EditButtonSVG} className="edit-icon"/>
@@ -36,6 +34,15 @@ const FriendProfilePage = () => {
                 <TopSongs topSongs={topSongs}/>
             </div>
 
+            <div className="song-table-container">
+                <h1>
+                    {userName} SONGS
+                    
+                </h1>
+                <SongTable songs={songs} />
+            </div>
+
+        </div>
         </>
     )
 }

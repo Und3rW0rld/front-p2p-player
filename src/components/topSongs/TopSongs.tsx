@@ -1,5 +1,5 @@
 import "./topSongs.css";
-import img from "../../assets/img/BaileInolvidable.jpg"
+
 interface Song {
   name: string;
   img: string;
