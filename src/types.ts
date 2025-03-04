@@ -19,3 +19,10 @@ export interface Story {
   idSong: string;
   timestamp?: string;
 }
+
+export interface SongFile {
+  idSong: string;
+  idUser: string;
+  fileSize: string;
+  fileType: string;
+}

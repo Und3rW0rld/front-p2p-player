@@ -4,42 +4,40 @@ import React from "react";
 
 interface SearchBarProps {
   placeholder: string;
+  defaultInput?: string;
   onSearch?: (term: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onSearch }) => {
-  const [inputValue, setInputValue] = React.useState("");
+const SearchBar: React.FC<SearchBarProps> = ({ placeholder, defaultInput, onSearch }) => {
+  const [inputValue, setInputValue] = React.useState(defaultInput || "");
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && onSearch) {
-      onSearch((event.target as HTMLInputElement).value);
+  React.useEffect(() => {
+    if (defaultInput !== undefined) {
+      setInputValue(defaultInput);
     }
-  };
+  }, [defaultInput]);
 
-  const handleBlur = () => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
     if (onSearch) {
-      onSearch(inputValue);
+      onSearch(event.target.value);
     }
   };
 
   return (
-    <>
-      <div className="search-bar-container">
-        <label htmlFor={`search-bar-${placeholder}`}>
-          <img src={SearchIcon} alt="search icon" />
-        </label>
+    <div className="search-bar-container">
+      <label htmlFor={`search-bar-${placeholder}`}>
+        <img src={SearchIcon} alt="search icon" />
+      </label>
 
-        <input
-          id={`search-bar-${placeholder}`}
-          type="text"
-          placeholder={placeholder}
-          value={inputValue}
-          onChange={(event) => setInputValue(event.target.value)}
-          onKeyDown={handleKeyPress}
-          onBlur={handleBlur}
-        />
-      </div>
-    </>
+      <input
+        id={`search-bar-${placeholder}`}
+        type="text"
+        placeholder={placeholder}
+        value={inputValue}
+        onChange={handleChange}
+      />
+    </div>
   );
 };
 

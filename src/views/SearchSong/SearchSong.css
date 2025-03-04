@@ -1,0 +1,83 @@
+.search-song-page-container {
+    margin-top: 12px;
+}
+
+.search-song-wrapper {
+    width: 100%;
+    padding: 20px;
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-song-container {
+    margin-top: 20px;
+    width: 80%;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #0b0f18, #111827);
+    box-shadow: var(--box-shadow-primary);
+    overflow: hidden;
+    padding: 10px;
+}
+
+/* Estilos de la tabla */
+.search-song-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.search-song-table thead {
+    font-size: large;
+}
+
+/* Establece el tamaño fijo de las columnas */
+.search-song-table th:nth-child(1),
+.search-song-table td:nth-child(1) {
+    width: 30%; /* Título */
+}
+
+.search-song-table th:nth-child(2),
+.search-song-table td:nth-child(2) {
+    width: 20%; /* Usuario */
+}
+
+.search-song-table th:nth-child(3),
+.search-song-table td:nth-child(3) {
+    width: 15%; /* Tamaño */
+}
+
+.search-song-table th:nth-child(4),
+.search-song-table td:nth-child(4) {
+    width: 35%; /* Nombre archivo */
+}
+
+.search-song-table th,
+.search-song-table td {
+    padding: 12px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.search-song-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Botón de descarga */
+.download-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: white;
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+.download-button:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}

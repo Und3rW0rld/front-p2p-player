@@ -18,14 +18,13 @@ const StoriesPage = () => {
     const nextUserId = currentIndex < storyKeys.length - 1 ? storyKeys[currentIndex + 1] : null;
     const story = idUser ? (stories[idUser as keyof typeof stories] as StoryType) : null;
     const songName = story?.idSong ? songs[story.idSong as keyof typeof songs]?.name || "Unknown" : "Unknown";
-    console.log(songName);
 
     if (!story) {
         return <p className="error-message">Historia no encontrada.</p>;
     }
 
     const handleSearchSong = () => {
-        // Implementar navegación
+        navigate(`/searchSong`, { state: { songName } });
     };
 
 
@@ -34,7 +33,7 @@ const StoriesPage = () => {
             <StoriesBar />
             <div className="stories-page-container">
                 <StoryViewer story={story} />
-                <Button label="Search this song" onClick={() => { /* handleSearchSong */ }} />
+                <Button label="Search this song" onClick={handleSearchSong} />
                 <NavigationButtons prevUserId={prevUserId} nextUserId={nextUserId} />
             </div>
         </>

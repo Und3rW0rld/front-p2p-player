@@ -72,7 +72,7 @@
 }
 
 .song-table tr.playing {
-  color: #1db954; /* Spotify-like green color for playing songs */
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Song info with image */

@@ -20,7 +20,9 @@ const StoriesPostPage = () => {
     };
 
     const filteredSongs = Object.entries(songs).reduce((acc, [id, song]: [string, SongType]) => {
-        if (song.name.toLowerCase().includes(searchTerm) || song.author.toLowerCase().includes(searchTerm)) {
+        if (song.name.toLowerCase().includes(searchTerm) ||
+            song.author.toLowerCase().includes(searchTerm) ||
+            song.album.toLowerCase().includes(searchTerm)) {
             acc[id] = song;
         }
         return acc;
@@ -58,7 +60,7 @@ const StoriesPostPage = () => {
                     <div className="song-selection">
                         <h3>Pick a Song</h3>
                         <SearchBar placeholder="Local search" onSearch={handleSearch} />
-                        <SongTable songs={filteredSongs} />
+                        <SongTable songs={filteredSongs} onSongSelect={handleSongSelect} />
                     </div>
 
                     {/* Sección de carga de imagen */}
