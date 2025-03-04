@@ -14,13 +14,18 @@ const StoriesBar: React.FC = () => {
         navigate(`/stories/${storyId}`);
     };
 
+    const handleAddStory = () => {
+        setSelectedStory("me");
+        navigate("/stories");
+    }
+
     return (
         <div className="stories-bar-container">
             <div className="stories-bar">
                 {/* Avatar del usuario actual */}
                 <div className="story">
                     <div className="avatar-wrapper">
-                        <StoryAvatar key="me" image={UserProfMockImg} isSelected={selectedStory === "me"} onClick={() => setSelectedStory("me")} />
+                        <StoryAvatar key="me" image={UserProfMockImg} isSelected={selectedStory === "me"} onClick={handleAddStory} />
                         <img src={addIcon} alt="Add Story" className="add-story-icon" />
                     </div>
                     <p className="story-text">You</p>
