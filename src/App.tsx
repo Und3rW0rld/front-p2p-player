@@ -20,7 +20,7 @@ function App() {
             <Route path="/userPage" element={<UserPage />} />
             <Route path="/stories" element={< StoriesPostPage />} />
             <Route path="/stories/:idUser" element={<StoriesPage />} />
-            <Route path="/friendProfile" element={<FriendProfilePage/>} />
+            <Route path="/friendProfile" element={<FriendProfilePage />} />
           </Routes>
         </StoriesProvider>
       </BrowserRouter>

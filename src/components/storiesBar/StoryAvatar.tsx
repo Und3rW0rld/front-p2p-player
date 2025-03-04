@@ -10,8 +10,10 @@ interface StoryAvatarProps {
 const StoryAvatar: React.FC<StoryAvatarProps> = ({ image, isSelected, onClick }) => {
 
     return (
-        <div className={`story-avatar ${isSelected ? "selected" : ""}`} onClick={onClick}>
-            <img src={image} alt="Story avatar" className="story-avatar-image" />
+        <div className="story-avatar-container">
+            <div className={`story-avatar ${isSelected ? "selected" : ""}`} onClick={onClick}>
+                <img src={image} alt="Story avatar" className="story-avatar-image" />
+            </div>
         </div>
     )
 }

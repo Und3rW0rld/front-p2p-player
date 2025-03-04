@@ -6,7 +6,6 @@
     width: 100vw;
     background-color: var(--background-color);
     overflow: hidden;
-}
 
 .story-viewer {
     position: relative;
@@ -109,8 +108,11 @@
     color: var(--tertiary-color);
 }
 
+}
+
 /* Responsividad */
 @media (max-width: 600px) {
+.story-viewer-container {
     .story-viewer {
         width: 90%;
         height: 600px;
@@ -127,5 +129,6 @@
 
     .song-artist {
         font-size: 12px;
+    }
     }
 }

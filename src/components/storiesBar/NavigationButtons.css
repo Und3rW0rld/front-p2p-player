@@ -6,7 +6,7 @@
     justify-content: space-between;
     transform: translateY(-50%);
     pointer-events: none;
-}
+
 
 .nav-button {
     background: rgba(0, 0, 0, 0.5);
@@ -27,4 +27,5 @@
 .nav-button.right {
     position: absolute;
     right: 10px;
+}
 }

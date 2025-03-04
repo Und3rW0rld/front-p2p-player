@@ -8,7 +8,6 @@
     padding: 10px;
     background-color: var(--background-color);
     border-radius: 10px;
-}
 
 .title {
     font-size: 24px;
@@ -67,4 +66,5 @@
 
 button {
     margin-top: 15px;
+}
 }
