@@ -1,0 +1,80 @@
+.player-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.player-wrapper .player {
+    padding: 15px 30px 5px 30px;
+    background-color: var(--background-color); 
+    border: solid 2px rgba(var(--primary-color-opacity), 0.4);
+    border-bottom-color: unset;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.player .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.actions .profile-image {
+    border-radius: 6px;
+    height: 42px;
+    width: 42px;
+}
+
+.actions .shuffle,
+.actions .previous,
+.actions .play,
+.actions .next {
+    width: 32px;
+    height: 32px;
+
+    cursor: pointer;
+}
+
+.actions .previous {
+    transform: rotateY(180deg);
+}
+
+.actions .next {
+    transform: rotateY(360deg);
+}
+
+.actions .play,
+.actions .replay,
+.actions .speaker  {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.actions .shuffle {
+    width: 28px;
+    height: 28px;
+}
+
+
+.progress {
+    margin-top: 5px;
+}
+
+.progress .progress-line {
+    height: 5px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.506);
+    border-radius: 10px;
+}
+
+.progress-line .current-progress {
+    height: 5px;
+    background-color: #fff;
+    border-radius: 10px;
+}

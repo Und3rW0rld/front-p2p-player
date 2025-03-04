@@ -19,6 +19,7 @@ import {
 import Column from "../../components/column/Column";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import Upload from "../../assets/icons/upload.svg";
+import Player from "../../components/player/player";
 const Main = () => {
   const [expand, setExpand] = useState(true);
 
@@ -83,6 +84,7 @@ const Main = () => {
   return (
     <>
       <StoriesBar />
+      <Player />
       <div className="main-page-container">
         <div className="main-page-header">
           <div className="left">
