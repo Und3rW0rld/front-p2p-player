@@ -6,12 +6,25 @@ import UploadIcon from "../../assets/icons/upload.svg";
 import SongTable from "../../components/songTable/SongTable";
 import songs from "../../assets/mocks/songs.json";
 import SearchBar from "../../components/search-bar/SearchBar";
+import { Song as SongType } from "../../types";
 
 const StoriesPostPage = () => {
     const [selectedSong, setSelectedSong] = useState<string | null>(null);
     const [image, setImage] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const [buttonIsActivated, setButtonIsActivated] = useState<boolean>(false);
+    const [searchTerm, setSearchTerm] = useState<string>("");
+
+    const handleSearch = (term: string) => {
+        setSearchTerm(term.toLowerCase());
+    };
+
+    const filteredSongs = Object.entries(songs).reduce((acc, [id, song]: [string, SongType]) => {
+        if (song.name.toLowerCase().includes(searchTerm) || song.author.toLowerCase().includes(searchTerm)) {
+            acc[id] = song;
+        }
+        return acc;
+    }, {} as Record<string, SongType>);
 
     const handleSongSelect = (song: string) => {
         setSelectedSong(song);
@@ -44,8 +57,8 @@ const StoriesPostPage = () => {
                     {/* Sección de selección de canción */}
                     <div className="song-selection">
                         <h3>Pick a Song</h3>
-                        <SearchBar placeholder="Loca search" />
-                        <SongTable songs={songs} />
+                        <SearchBar placeholder="Local search" onSearch={handleSearch} />
+                        <SongTable songs={filteredSongs} />
                     </div>
 
                     {/* Sección de carga de imagen */}
