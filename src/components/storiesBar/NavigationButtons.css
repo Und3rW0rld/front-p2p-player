@@ -1,0 +1,30 @@
+.navigation-buttons {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.nav-button {
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+.nav-button.left {
+    position: absolute;
+    left: 10px;
+}
+
+.nav-button.right {
+    position: absolute;
+    right: 10px;
+}

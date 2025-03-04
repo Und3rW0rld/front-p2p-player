@@ -1,0 +1,39 @@
+.custom-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(var(--secondary-color-opacity), 0.05);
+    border: solid 1px rgba(var(--primary-color-opacity), 0.2);
+    border-radius: 10px;
+    padding: 0.8rem 2rem;
+    height: 3.3rem;
+    color: var(--secondary-color);
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: background 0.3s ease, border 0.3s ease;
+    gap: 0.75rem; /* Espacio entre icono y texto */
+  }
+  
+  .custom-button:hover {
+    background-color: rgba(var(--primary-color-opacity), 0.2);
+  }
+  
+  .custom-button:active {
+    background-color: rgba(var(--primary-color-opacity), 0.3);
+  }
+  
+  .custom-button:focus {
+    outline: none;
+  }
+  
+  .button-icon {
+    width: 1.5rem; /* Ajusta según sea necesario */
+    height: 1.5rem;
+  }
+  
+  .disabled {
+    background: var(--quaternary-color);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.4;
+  }
