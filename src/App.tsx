@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { StoriesProvider } from "./context/StoriesContext";
 import "./App.css";
 import Login from "./views/Login/Login";
@@ -9,24 +9,44 @@ import StoriesPage from "./views/StoriesPages/StoriesPage";
 import StoriesPostPage from "./views/StoriesPages/StoriesPostPage";
 import FriendProfilePage from "./views/FriendProfile/FriendProfile";
 import SearchSong from "./views/SearchSong/SearchSong";
+import NavBar from "./components/navBar/navBar";
+import { useEffect } from "react";
+
+function Layout() {
+  const location = useLocation();
+  const noNavBarRoutes = ["/login", "/register"];
+  const hideNavBar = noNavBarRoutes.includes(location.pathname);
+
+  useEffect(() => {
+    document.body.classList.toggle("no-navbar", hideNavBar);
+  }, [hideNavBar]);
+
+  return (
+    <div className="app-container">
+      {!hideNavBar && <NavBar />}
+      <div className="content">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/main" element={<Main />} />
+          <Route path="/userPage" element={<UserPage />} />
+          <Route path="/stories" element={< StoriesPostPage />} />
+          <Route path="/stories/:idUser" element={<StoriesPage />} />
+          <Route path="/friendProfile" element={<FriendProfilePage />} />
+          <Route path="/searchSong" element={<SearchSong />} />
+        </Routes>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <StoriesProvider>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/main" element={<Main />} />
-            <Route path="/userPage" element={<UserPage />} />
-            <Route path="/stories" element={< StoriesPostPage />} />
-            <Route path="/stories/:idUser" element={<StoriesPage />} />
-            <Route path="/friendProfile" element={<FriendProfilePage />} />
-            <Route path="/searchSong" element={<SearchSong />} />
-          </Routes>
-        </StoriesProvider>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <StoriesProvider>
+        <Layout />
+      </StoriesProvider>
+    </BrowserRouter>
   );
 }
 
