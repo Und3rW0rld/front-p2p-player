@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from "react";
+import { createContext, useContext, useState, useCallback , useRef} from "react";
 import { parseBlob } from "music-metadata";
 
 
@@ -30,7 +30,7 @@ declare global {
 
 interface FileMetadata {
     id: string;
-    index: string;
+
     title?: string;
     artist?: string;
     image?: string;
@@ -47,6 +47,9 @@ interface FileContextType {
     directoryHandle: FileSystemDirectoryHandle | null;
     onDirectorySelection: () => Promise<void>;
     isProcessing: boolean;
+    currentSong: string | null;
+    setCurrentSong: (path: string | null) => void;
+    audioRef: React.RefObject<HTMLAudioElement>;
 }
 
 const FileContext = createContext<FileContextType | null>(null);
@@ -57,7 +60,9 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [files, setFiles] = useState<Map<string, File>>(new Map());
     const [metadata, setMetadata] = useState<Map<string, FileMetadata>>(new Map());
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
-    const [filesLoaded, setFilesLoaded] = useState(0);
+    
+    const [currentSong, setCurrentSong] = useState<string | null>(null);
+    const audioRef = useRef<HTMLAudioElement>(null);
 
     // Function to check if file is a music file
     const isMusicFile = (filename: string): boolean => {
@@ -66,56 +71,53 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Process a file to extract metadata and add to state
     const processFile = async (path: string, file: File) => {
-        try {
-            // Add to files map
-            setFiles(prev => {
-                const newFiles = new Map(prev);
-                newFiles.set(path, file);
-                return newFiles;
-            });
-    
-            // Extract metadata
-            const metadataResult = await parseBlob(file);
-    
-            setFilesLoaded(prevFilesLoaded => {
-                const newFilesLoaded = prevFilesLoaded + 1; // Get the latest count
-                
-                setMetadata(prev => {
-                    const newMetadata = new Map(prev);
-    
-                    const picture = metadataResult.common.picture?.[0];
-                    let base64String = "";
-                    let imageSrc = " ";
-                    if (picture) {
-                        for (let i = 0; i < picture.data.length; i++) {
-                            base64String += String.fromCharCode(picture.data[i]);
-                        }
-                        imageSrc = `data:${picture.type};base64,${window.btoa(base64String)}`;
+    try {
+        // Add to files map
+        setFiles(prev => {
+            const newFiles = new Map(prev);
+            newFiles.set(path, file);
+            return newFiles;
+        });
+
+        // Extract metadata
+        const metadataResult = await parseBlob(file);
+
+
+            setMetadata(prev => {
+                const newMetadata = new Map(prev);
+
+                const picture = metadataResult.common.picture?.[0];
+                let base64String = "";
+                let imageSrc = " ";
+                if (picture) {
+                    for (let i = 0; i < picture.data.length; i++) {
+                        base64String += String.fromCharCode(picture.data[i]);
                     }
-    
-                    newMetadata.set(path, {
-                        id: path,
-                        index: newFilesLoaded.toString(), // Now we ensure the latest value
-                        title: metadataResult.common.title || "Unknown Title",
-                        artist: metadataResult.common.artist || "Unknown Artist",
-                        image: imageSrc,
-                        album: metadataResult.common.album || "Unknown Album",
-                        duration: metadataResult.format.duration || 0,
-                        format: metadataResult.format.container,
-                    });
-    
-                    return newMetadata;
+                    imageSrc = `data:${picture.type};base64,${window.btoa(base64String)}`;
+                }
+
+                newMetadata.set(path, {
+                    id: path,
+
+                    title: metadataResult.common.title || "Unknown Title",
+                    artist: metadataResult.common.artist || "Unknown Artist",
+                    image: imageSrc,
+                    album: metadataResult.common.album || "Unknown Album",
+                    duration: metadataResult.format.duration || 0,
+                    format: metadataResult.format.container,
                 });
-    
-                return newFilesLoaded; // Return updated filesLoaded
+
+                return newMetadata;
             });
-    
-            console.log(`Processed file ${path}`);
-        } catch (error) {
-            console.error(`Error processing file ${path}:`, error);
-        }
-    };
-    
+
+
+
+        console.log(`Processed file ${path}`);
+    } catch (error) {
+        console.error(`Error processing file ${path}:`, error);
+    }
+};
+
 
     // Recursive function to process all files in a directory
     const processDirectory = async (
@@ -170,9 +172,13 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
             metadata, 
             directoryHandle,
             onDirectorySelection, 
-            isProcessing 
+            isProcessing,
+            currentSong,
+            setCurrentSong,
+            audioRef
         }}>
             {children}
+            <audio ref={audioRef} /> {/* Global audio element */}
         </FileContext.Provider>
     );
 };

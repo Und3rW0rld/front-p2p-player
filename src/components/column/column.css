@@ -1,7 +1,47 @@
-.column {
-  border: none;
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 0;
-  gap: 1.5rem;
+.song-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.song-table th,
+.song-table td {
+  padding: 10px;
+  text-align: left;
+}
+
+/* Set specific column widths */
+.song-table th:nth-child(1),
+.song-table td:nth-child(1) {
+  width: 50px; /* Drag handle column */
+}
+
+.song-table th:nth-child(2),
+.song-table td:nth-child(2) {
+  width: 60px; /* Play button column */
+}
+
+.song-table th:nth-child(3),
+.song-table td:nth-child(3) {
+  width: 80px; /* Image column */
+}
+
+.song-table th:nth-child(4),
+.song-table td:nth-child(4) {
+  width: auto; /* Title column (flexible) */
+}
+
+.song-table th:nth-child(5),
+.song-table td:nth-child(5) {
+  width: 20%; /* Artist column */
+}
+
+.song-table th:nth-child(6),
+.song-table td:nth-child(6) {
+  width: 20%; /* Album column */
+}
+
+.song-table th:nth-child(7),
+.song-table td:nth-child(7) {
+  width: 100px; /* Duration column */
+  text-align: center;
 }

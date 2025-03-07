@@ -35,3 +35,19 @@
     align-items: center;
   }
 }
+td {
+  padding: 0px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+td:first-child {
+  cursor: grab;
+  font-size: 20px;
+  text-align: center;
+  width: 40px;
+}
+
+td:first-child:active {
+  cursor: grabbing;
+}

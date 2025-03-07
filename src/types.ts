@@ -1,12 +1,10 @@
 export interface Song {
   id: string;
-  index: string;
   title?: string;
   artist?: string;
   image?: string;
   album?: string;
   duration?: string;
-  url?: string;
 }
 
 export interface User {

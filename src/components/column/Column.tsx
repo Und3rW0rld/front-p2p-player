@@ -13,15 +13,16 @@ interface ColumnProps {
 }
 
 const Column: FC<ColumnProps> = ({ songs }) => {
-  console.log("Songs received in Column:", songs);
+
 
   return (
     <div className="column">
       <table className="song-table">
         <thead>
           <tr>
+            <th></th>
+            <th>Play</th>
             <th>Image</th>
-        
             <th>Title</th>
             <th>Artist</th>
             <th>Album</th>
@@ -30,21 +31,22 @@ const Column: FC<ColumnProps> = ({ songs }) => {
         </thead>
         <tbody>
           <SortableContext items={songs} strategy={verticalListSortingStrategy}>
-            {songs.map((song, index) => (
+            {songs.map((song) => (
               <SongComponent
                 key={song.id}
-                index={song.index}
+
                 id={song.id}
                 image={song.image || ""}
                 name={song.title || "Unknown Title"}
                 author={song.artist || "Unknown Artist"}
                 album={song.album || "Unknown Album"}
                 duration={song.duration || "0:00"}
-                asTableRow={true} // Ensures it renders as a <tr>
+                asTableRow={true} 
               />
             ))}
           </SortableContext>
         </tbody>
+
       </table>
     </div>
   );
