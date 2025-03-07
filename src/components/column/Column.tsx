@@ -17,7 +17,7 @@ const Column: FC<ColumnProps> = ({ songs }) => {
 
   return (
     <div className="column">
-      <table className="song-table">
+      <table className="draggable-song-table">
         <thead>
           <tr>
             <th></th>

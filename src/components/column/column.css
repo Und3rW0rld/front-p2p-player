@@ -1,47 +1,61 @@
-.song-table {
+.draggable-song-table {
   width: 100%;
   border-collapse: collapse;
-}
+  color: #fff;
+  font-family: "Arial", sans-serif;
 
-.song-table th,
-.song-table td {
-  padding: 10px;
-  text-align: left;
-}
+  thead {
+    border-bottom: 1px solid #333;
+  }
 
-/* Set specific column widths */
-.song-table th:nth-child(1),
-.song-table td:nth-child(1) {
-  width: 50px; /* Drag handle column */
-}
+  th {
+    text-align: left;
+    padding: 10px 8px;
+    font-size: 20px;
+    color: var(--tertiary-color);
+    font-weight: normal;
+  }
 
-.song-table th:nth-child(2),
-.song-table td:nth-child(2) {
-  width: 60px; /* Play button column */
-}
+  td {
+    padding: 10px 8px;
+    font-size: 20px;
+    color: var(--tertiary-color);
+    font-weight: lighter;
+  }
 
-.song-table th:nth-child(3),
-.song-table td:nth-child(3) {
-  width: 80px; /* Image column */
-}
+  th:nth-child(1),
+  td:nth-child(1) {
+    width: 50px; /* Drag handle column */
+  }
 
-.song-table th:nth-child(4),
-.song-table td:nth-child(4) {
-  width: auto; /* Title column (flexible) */
-}
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: 60px; /* Play button column */
+  }
 
-.song-table th:nth-child(5),
-.song-table td:nth-child(5) {
-  width: 20%; /* Artist column */
-}
+  th:nth-child(3),
+  td:nth-child(3) {
+    width: 80px; /* Image column */
+  }
 
-.song-table th:nth-child(6),
-.song-table td:nth-child(6) {
-  width: 20%; /* Album column */
-}
+  .draggable-song-table th:nth-child(4),
+  .draggable-song-table td:nth-child(4) {
+    width: auto; /* Title column (flexible) */
+  }
 
-.song-table th:nth-child(7),
-.song-table td:nth-child(7) {
-  width: 100px; /* Duration column */
-  text-align: center;
+  th:nth-child(5),
+  td:nth-child(5) {
+    width: 20%; /* Artist column */
+  }
+
+  th:nth-child(6),
+  td:nth-child(6) {
+    width: 20%; /* Album column */
+  }
+
+  th:nth-child(7),
+  td:nth-child(7) {
+    width: 100px; /* Duration column */
+    text-align: center;
+  }
 }
