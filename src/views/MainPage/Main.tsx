@@ -1,11 +1,17 @@
+import { useState, useEffect } from "react";
+import { useFileContext } from "../../providers/FileProvider";
+
 import Playlist from "../../components/playlist/Playlist";
 import Expand from "../../assets/icons/polygon.svg";
 import "./main-page.css";
 import playlists from "../../assets/mocks/playlist.json";
 import AddPlaylist from "../../assets/icons/add-playlists.svg";
-import { useState } from "react";
 import SearchBar from "../../components/search-bar/SearchBar";
 import StoriesBar from "../../components/storiesBar/StoriesBar";
+import {Song} from "../../types";
+import Column from "../../components/column/Column";
+import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import Upload from "../../assets/icons/upload.svg";
 
 import {
   closestCorners,
@@ -16,46 +22,42 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import Column from "../../components/column/Column";
-import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import Upload from "../../assets/icons/upload.svg";
-const Main = () => {
+
+
+const Main: React.FC = () => {
   const [expand, setExpand] = useState(true);
 
-  const [songs, setSongs] = useState([
-    {
-      id: "1",
-      title: "Song 1",
-      artist: "Artist 1",
-      image: "https://picsum.photos/200/200",
-      album: "Album 1",
-      duration: "3:00",
-    },
-    {
-      id: "2",
-      title: "Song 2",
-      artist: "Artist 2",
-      image: "https://picsum.photos/200/200",
-      album: "Album 2",
-      duration: "3:00",
-    },
-    {
-      id: "3",
-      title: "Song 3",
-      artist: "Artist 3",
-      image: "https://picsum.photos/200/200",
-      album: "Album 3",
-      duration: "3:00",
-    },
-  ]);
+  const {files, metadata, onDirectorySelection, isProcessing} = useFileContext();
+  const fileEntries = Array.from(files.entries());
 
-  interface Song {
-    id: string;
-    title: string;
-    artist: string;
-    image: string;
-  }
+  const [songs, setSongs] = useState<Song[]>([]);
 
+// Update songs when files or metadata change
+useEffect(() => {
+
+
+  const updatedSongs: Song[] = fileEntries.map(([path, file]) => {
+    const fileMetadata = metadata.get(path); // Retrieve metadata using the path as key
+
+ 
+
+    return {
+      id: path, // Use file path as a unique ID
+      title: fileMetadata?.title || "Unknown Title",
+      artist: fileMetadata?.artist || "Unknown Artist",
+      image: fileMetadata?.image || "https://picsum.photos/200/200", // Default placeholder image
+      album: fileMetadata?.album || "Unknown Album",
+      duration: fileMetadata?.duration
+        ? `${Math.floor(fileMetadata.duration / 60)}:${Math.floor(fileMetadata.duration % 60)
+          .toString()
+          .padStart(2, "0")}`
+          : "0:00", // Convert seconds to mm:ss
+    };
+  });
+
+
+  setSongs(updatedSongs);
+}, [files, metadata]);
   const getSongPos = (id: number): number => {
     return songs.findIndex((song: Song) => song.id === id.toString());
   };
@@ -115,9 +117,10 @@ const Main = () => {
         <div className="songs-container">
           <div className="header-songs">
             <h3 className="main-title">YOUR SONGS</h3>
-            <img src={Upload} alt="" />
+            <img src = {Upload} onClick={(onDirectorySelection)}/>
           </div>
           <div className="song-list">
+          
             <DndContext
               sensors={sensor}
               onDragEnd={handleDragEnd}

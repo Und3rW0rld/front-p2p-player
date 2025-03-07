@@ -1,10 +1,10 @@
 export interface Song {
-  name: string;
-  author: string;
-  image: string;
-  album: string;
-  duration: string;
-  url?: string;
+  id: string;
+  title?: string;
+  artist?: string;
+  image?: string;
+  album?: string;
+  duration?: string;
 }
 
 export interface User {

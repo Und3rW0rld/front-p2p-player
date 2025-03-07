@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { StoriesProvider } from "./context/StoriesContext";
+import { FileProvider } from "./providers/FileProvider";
 import "./App.css";
 import Login from "./views/Login/Login";
 import Register from "./views/Register/Register";
@@ -45,9 +46,11 @@ function Layout() {
 function App() {
   return (
     <BrowserRouter>
-      <StoriesProvider>
-        <Layout />
-      </StoriesProvider>
+      <FileProvider>
+        <StoriesProvider>
+          <Layout />
+        </StoriesProvider>
+      </FileProvider>
     </BrowserRouter>
   );
 }
