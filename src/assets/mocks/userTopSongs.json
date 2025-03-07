@@ -1,21 +1,20 @@
 [
-    {
-      "name": "TOP 2",
-      "img": "DuvetBoa.jpg",
-      "title": "Baile Inolvidable",
-      "author": "Bad Bunny"
-    },
-    {
-      "name": "TOP 1",
-      "img": "BaileInolvidable.jpg",
-      "title": "Duvet",
-      "author": "Boa"
-    },
-    {
-      "name": "TOP 3",
-      "img": "LostKitten.jpg",
-      "title": "Lost Kitten",
-      "author": "Metric"
-    }
-  ]
-  
+  {
+    "name": "TOP 2",
+    "img": "BaileInolvidable.jpg",
+    "title": "Baile Inolvidable",
+    "author": "Bad Bunny"
+  },
+  {
+    "name": "TOP 1",
+    "img": "DuvetBoa.jpg",
+    "title": "Duvet",
+    "author": "Boa"
+  },
+  {
+    "name": "TOP 3",
+    "img": "LostKitten.jpg",
+    "title": "Lost Kitten",
+    "author": "Metric"
+  }
+]

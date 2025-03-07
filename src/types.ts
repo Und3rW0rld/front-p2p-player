@@ -1,10 +1,10 @@
 export interface Song {
-  name: string;
-  author: string;
-  image: string;
-  album: string;
-  duration: string;
-  url?: string;
+  id: string;
+  title?: string;
+  artist?: string;
+  image?: string;
+  album?: string;
+  duration?: string;
 }
 
 export interface User {
@@ -18,4 +18,11 @@ export interface Story {
   image: string;
   idSong: string;
   timestamp?: string;
+}
+
+export interface SongFile {
+  idSong: string;
+  idUser: string;
+  fileSize: string;
+  fileType: string;
 }

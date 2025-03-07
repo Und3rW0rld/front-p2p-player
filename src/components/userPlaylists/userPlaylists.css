@@ -42,4 +42,5 @@
   display: flex;
   overflow: clip;
   gap: 20px;
+  align-items: center;
 }

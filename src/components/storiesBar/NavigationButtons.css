@@ -6,14 +6,14 @@
     justify-content: space-between;
     transform: translateY(-50%);
     pointer-events: none;
-
+}
 
 .nav-button {
     background: rgba(0, 0, 0, 0.5);
     border: none;
     color: white;
-    font-size: 24px;
-    padding: 10px;
+    font-size: 1.5rem; /* Cambiado a rem */
+    padding: 0.625rem; /* Cambiado a rem */
     border-radius: 50%;
     cursor: pointer;
     pointer-events: all;
@@ -21,11 +21,10 @@
 
 .nav-button.left {
     position: absolute;
-    left: 10px;
+    left: 10%; /* Cambiado a % */
 }
 
 .nav-button.right {
     position: absolute;
-    right: 10px;
-}
+    right: 10%; /* Cambiado a % */
 }
