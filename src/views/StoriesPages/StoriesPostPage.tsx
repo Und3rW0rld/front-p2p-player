@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./StoriesPostPage.css";
 import StoriesBar from "../../components/storiesBar/StoriesBar";
 import Button from "../../components/button/Button";
-import UploadIcon from "../../assets/icons/upload.svg";
 import SongTable from "../../components/songTable/SongTable";
 import songs from "../../assets/mocks/songs.json";
 import SearchBar from "../../components/search-bar/SearchBar";
@@ -72,7 +71,7 @@ const StoriesPostPage = () => {
                 </div>
 
                 {/* Botón de publicación */}
-                <Button label="Post" onClick={handlePost} icon={UploadIcon} isActivated={buttonIsActivated} />
+                <Button label="Post" onClick={handlePost} type="button" isActivated={buttonIsActivated} icon="upload" />
             </div>
         </>
     );

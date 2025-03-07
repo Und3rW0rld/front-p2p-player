@@ -33,7 +33,7 @@ const StoriesPage = () => {
             <StoriesBar />
             <div className="stories-page-container">
                 <StoryViewer story={story} />
-                <Button label="Search this song" onClick={handleSearchSong} />
+                <Button label="Search this song" onClick={handleSearchSong} icon="search" />
                 <NavigationButtons prevUserId={prevUserId} nextUserId={nextUserId} />
             </div>
         </>

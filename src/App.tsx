@@ -8,6 +8,7 @@ import UserPage from './views/UserView/UserPage'
 import StoriesPage from "./views/StoriesPages/StoriesPage";
 import StoriesPostPage from "./views/StoriesPages/StoriesPostPage";
 import FriendProfilePage from "./views/FriendProfile/FriendProfile";
+import SettingView from "./views/SettingsView/SettingsView";
 import SearchSong from "./views/SearchSong/SearchSong";
 import NavBar from "./components/navBar/navBar";
 import { useEffect } from "react";
@@ -34,6 +35,7 @@ function Layout() {
           <Route path="/stories/:idUser" element={<StoriesPage />} />
           <Route path="/friendProfile" element={<FriendProfilePage />} />
           <Route path="/searchSong" element={<SearchSong />} />
+          <Route path="/settings" element={<SettingView />} />
         </Routes>
       </div>
     </div>
