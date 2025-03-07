@@ -1,9 +1,11 @@
 export interface Song {
-  name: string;
-  author: string;
-  image: string;
-  album: string;
-  duration: string;
+  id: string;
+  index: string;
+  title?: string;
+  artist?: string;
+  image?: string;
+  album?: string;
+  duration?: string;
   url?: string;
 }
 
