@@ -59,6 +59,8 @@ const Column: FC<ColumnProps> = ({ songs, onDragEnd }) => {
               <th>Artist</th>
               <th>Album</th>
               <th>Duration</th>
+              <th></th>
+              
             </tr>
           </thead>
           <tbody>

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback ,  useEffect} from "react";
+import { createContext, useContext, useState, useCallback, useEffect } from "react";
 import { parseBlob } from "music-metadata";
 import { Song } from "../types";
 
@@ -31,17 +31,14 @@ declare global {
 
 interface FileMetadata {
     id: string;
-
     title?: string;
     artist?: string;
     image?: string;
     album?: string;
     duration?: number;
     format?: string;
-
+    fileSize?: string; // Added fileSize field
 }
-
-
 
 interface FileContextType {
     files: Map<string, File>;
@@ -64,10 +61,20 @@ interface FileContextType {
     isMuted: boolean;
     
     songList: Song[]
-    
 }
 
 const FileContext = createContext<FileContextType | null>(null);
+
+// Helper function to format file size
+const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes';
+    
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
 
 export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
@@ -99,6 +106,7 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     duration: data.duration
                         ? `${Math.floor(data.duration / 60)}:${Math.floor(data.duration % 60).toString().padStart(2, "0")}`
                         : "0:00",
+                    fileSize: data.fileSize || "Unknown Size" // Include fileSize in songList
                 }))
             );
         }
@@ -135,7 +143,7 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
             URL.revokeObjectURL(objectUrl);
             audioElement.removeEventListener("ended", handleSongEnd);
         };
-    }, [currentSong, songVolume]); // ✅ Depend on songVolume
+    }, [currentSong, songVolume]); 
     
 
 
@@ -208,17 +216,16 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Process a file to extract metadata and add to state
     const processFile = async (path: string, file: File) => {
-    try {
-        // Add to files map
-        setFiles(prev => {
-            const newFiles = new Map(prev);
-            newFiles.set(path, file);
-            return newFiles;
-        });
+        try {
+            // Add to files map
+            setFiles(prev => {
+                const newFiles = new Map(prev);
+                newFiles.set(path, file);
+                return newFiles;
+            });
 
-        // Extract metadata
-        const metadataResult = await parseBlob(file);
-
+            // Extract metadata
+            const metadataResult = await parseBlob(file);
 
             setMetadata(prev => {
                 const newMetadata = new Map(prev);
@@ -235,25 +242,23 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
                 newMetadata.set(path, {
                     id: path,
-
                     title: metadataResult.common.title || "Unknown Title",
                     artist: metadataResult.common.artist || "Unknown Artist",
                     image: imageSrc,
                     album: metadataResult.common.album || "Unknown Album",
                     duration: metadataResult.format.duration || 0,
                     format: metadataResult.format.container,
+                    fileSize: formatFileSize(file.size) // Add formatted file size
                 });
 
                 return newMetadata;
             });
 
-
-
-        console.log(`Processed file ${path}`);
-    } catch (error) {
-        console.error(`Error processing file ${path}:`, error);
-    }
-};
+            console.log(`Processed file ${path}`);
+        } catch (error) {
+            console.error(`Error processing file ${path}:`, error);
+        }
+    };
 
 
     // Recursive function to process all files in a directory
@@ -324,7 +329,6 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
             songList
         }}>
             {children}
-            
         </FileContext.Provider>
     );
 };
@@ -335,4 +339,4 @@ export const useFileContext = (): FileContextType => {
         throw new Error("useFileContext must be used within a FileProvider");
     }
     return context;
-}; 
+};

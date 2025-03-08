@@ -49,3 +49,37 @@ export const deleteSong = async (songId: string) => {
         throw error;
     }
 };
+
+interface CreateSongDto {
+    title: string;
+    username: string;
+    size: string;
+    fileName: string;
+    fileUrl: string;
+}
+
+// Updated postSong function - doesn't try to use React hooks
+export const postSong = async (
+    song: Song,
+    file: File | null
+): Promise<Song> => {
+    try {
+        const storedUser = localStorage.getItem("user"); 
+        const username = storedUser ? JSON.parse(storedUser).username : "Unknown User";
+
+        // Create DTO with available information
+        const createSongDto: CreateSongDto = {
+            title: song.title || "Unknown Title",
+            username,
+            size: song.fileSize || (file ? `${file.size} bytes` : "Unknown size"),
+            fileName: file ? file.name : `song-${song.id}.mp3`,
+            fileUrl: `http://localhost:8080/api/song/${encodeURIComponent(file ? file.name : song.id)}`,
+        };
+
+        const response = await api.post<Song>("/api/song", createSongDto);
+        return response.data;
+    } catch (error) {
+        console.error("Error posting song:", error);
+        throw error;
+    }
+};
