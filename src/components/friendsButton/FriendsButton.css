@@ -24,13 +24,14 @@
 .friends-panel {
   position: relative;
   top: 10px;
-  left: -320px;
-  width: 320px;
-  height: 100%;
+  left: -360px;
+  width: 350px;
+  max-height: 500px; /* Tamaño fijo */
   box-shadow: var(--box-shadow-primary);
   border-radius: 0 8px 8px 0;
   transition: left 0.3s ease-in-out;
-  overflow-y: auto;
+  overflow-y: auto; /* Permitir desplazamiento vertical */
+  background-color: var(--background-color);
 }
 
 .friends-panel.open {
