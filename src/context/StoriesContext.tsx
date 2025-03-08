@@ -7,18 +7,20 @@ interface StoriesContextType {
     selectedStory: string | null;
     setSelectedStory: (storyId: string | null) => void;
     stories: Story[];
-    users: { [key: string]: User };
+    users: User[];
 }
 
 const StoriesContext = createContext<StoriesContextType | undefined>(undefined);
 
 export const StoriesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+
     const [selectedStory, setSelectedStory] = useState<string | null>(null);
     const [stories, setStories] = useState<Story[]>([]);
-    const [users, setUsers] = useState<{ [key: string]: User }>({});
+    const [users, setUsers] = useState<User[]>([]);
 
     useEffect(() => {
-        setStories(Object.values(storiesData));
+        console.log(storiesData);
+        setStories(storiesData);
         setUsers(usersData);
     }, []);
 

@@ -8,7 +8,7 @@
     transition: background 0.3s;
     justify-content: space-between;
     margin-top: 10px;
-}
+    margin-bottom: 10px;
 
 .friend-item:hover {
     background-color: #15154a;
@@ -62,4 +62,5 @@
 
 .friend-reject-btn:hover {
     color: #d32f2f;
+}
 }

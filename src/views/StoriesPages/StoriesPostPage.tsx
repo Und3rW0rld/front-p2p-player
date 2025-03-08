@@ -3,12 +3,12 @@ import "./StoriesPostPage.css";
 import StoriesBar from "../../components/storiesBar/StoriesBar";
 import Button from "../../components/button/Button";
 import SongTable from "../../components/songTable/SongTable";
-import songs from "../../assets/mocks/songs.json";
+import songsData from "../../assets/mocks/songs.json";
 import SearchBar from "../../components/search-bar/SearchBar";
-import { Song as SongType } from "../../types";
+import { Song } from "../../types";
 
 const StoriesPostPage = () => {
-    const [selectedSong, setSelectedSong] = useState<string | null>(null);
+    const [selectedSong, setSelectedSong] = useState<Song | null>(null);
     const [image, setImage] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const [buttonIsActivated, setButtonIsActivated] = useState<boolean>(false);
@@ -18,16 +18,15 @@ const StoriesPostPage = () => {
         setSearchTerm(term.toLowerCase());
     };
 
-    const filteredSongs = Object.entries(songs).reduce((acc, [id, song]: [string, SongType]) => {
-        if (song.name.toLowerCase().includes(searchTerm) ||
-            song.author.toLowerCase().includes(searchTerm) ||
-            song.album.toLowerCase().includes(searchTerm)) {
-            acc[id] = song;
-        }
-        return acc;
-    }, {} as Record<string, SongType>);
+    // Convertimos songsData en un array tipado de Song[]
+    const filteredSongs: Song[] = Object.values(songsData).filter((song) =>
+        song.title?.toLowerCase().includes(searchTerm) ||
+        song.artist?.toLowerCase().includes(searchTerm) ||
+        song.album?.toLowerCase().includes(searchTerm)
+    );
 
-    const handleSongSelect = (song: string) => {
+    const handleSongSelect = (songId: string) => {
+        const song = Object.values(songsData).find((song) => song._id === songId) || null;
         setSelectedSong(song);
     };
 
@@ -45,7 +44,7 @@ const StoriesPostPage = () => {
             alert("Please upload an image");
             return;
         }
-        alert(`Story posted with song: ${selectedSong || "No song"}`);
+        alert(`Story posted with song: ${selectedSong ? `${selectedSong.title} by ${selectedSong.artist}` : "No song"}`);
     };
 
     return (

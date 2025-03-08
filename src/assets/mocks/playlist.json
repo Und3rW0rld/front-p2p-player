@@ -1,37 +1,37 @@
-{
-  "1": {
+[
+  {
     "name": "La poderosa",
     "image": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/74/d1/d1/74d1d152-4513-a1f6-4868-4d58a0b3a242/0.jpg/1380x1380bb.webp",
     "songCount": 215
   },
-  "2": {
+  {
     "name": "Chill music",
     "image": "https://taz.de/picture/7398464/1200/37153182-1.jpeg",
     "songCount": 215
   },
-  "3": {
+  {
     "name": "Aleteo Puro",
     "image": "https://i.scdn.co/image/ab67616d0000b273b67361e263742269a1a4c928",
     "songCount": 215
   },
-  "4": {
+  {
     "name": "Los prohibidos",
     "image": "https://i.scdn.co/image/ab67616d0000b273b67361e263742269a1a4c928",
     "songCount": 215
   },
-  "5": {
+  {
     "name": "Los prohibidos",
     "image": "https://i.scdn.co/image/ab67616d0000b273b67361e263742269a1a4c928",
     "songCount": 215
   },
-  "6": {
+  {
     "name": "Los prohibidos",
     "image": "https://i.scdn.co/image/ab67616d0000b273b67361e263742269a1a4c928",
     "songCount": 215
   },
-  "7": {
+  {
     "name": "Los prohibidos",
     "image": "https://i.scdn.co/image/ab67616d0000b273b67361e263742269a1a4c928",
     "songCount": 215
   }
-}
+]

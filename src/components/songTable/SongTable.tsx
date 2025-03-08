@@ -1,42 +1,24 @@
 import { useState } from "react";
 import "./SongTable.css";
-
-interface Song {
-  name: string;
-  author: string;
-  image: string;
-  album: string;
-  duration: string;
-}
-
-interface SongsData {
-  [id: string]: Song;
-}
+import { Song } from "../../types"; // Asegúrate de importar la interfaz correcta
 
 interface SongTableProps {
-  songs: SongsData;
-  onSongSelect?: (song: string) => void;
+  songs: Song[]; // Ahora `songs` es un array de canciones en lugar de un objeto indexado
+  onSongSelect?: (songId: string) => void;
 }
 
 const SongTable = ({ songs, onSongSelect }: SongTableProps) => {
   const [currentPlaying, setCurrentPlaying] = useState<string | null>(null);
 
-  const songClickHandler = (song: string) => {
-    setCurrentPlaying(song);
+  const songClickHandler = (songId: string) => {
+    setCurrentPlaying(songId);
     if (onSongSelect) {
-      onSongSelect(song);
+      onSongSelect(songId);
     }
-  }
-
-  const songsArray = Object.entries(songs).map(([id, song]) => ({
-    id,
-    ...song
-  }));
+  };
 
   return (
     <div className="song-table-container">
-
-
       <table className="song-table">
         <thead>
           <tr>
@@ -49,11 +31,11 @@ const SongTable = ({ songs, onSongSelect }: SongTableProps) => {
           </tr>
         </thead>
         <tbody>
-          {songsArray.map((song) => (
+          {songs.map((song) => (
             <tr
-              key={song.id}
-              className={currentPlaying === song.id ? "playing" : ""}
-              onClick={() => songClickHandler(song.id)}
+              key={song._id}
+              className={currentPlaying === song._id ? "playing" : ""}
+              onClick={() => songClickHandler(song._id)}
             >
               <td className="handle-column">
                 <div className="drag-handle">
@@ -64,14 +46,14 @@ const SongTable = ({ songs, onSongSelect }: SongTableProps) => {
               <td className="song-column">
                 <div className="song-info">
                   <div className="song-image">
-                    <img src={song.image} alt={song.name} />
+                    <img src={song.image} alt={song.title || "Song"} />
                   </div>
-                  <span className="song-name">{song.name}</span>
+                  <span className="song-name">{song.title || "Unknown Title"}</span>
                 </div>
               </td>
-              <td className="artist-column">{song.author}</td>
-              <td className="album-column">{song.album}</td>
-              <td className="duration-column">{song.duration}</td>
+              <td className="artist-column">{song.artist || "Unknown Artist"}</td>
+              <td className="album-column">{song.album || "Unknown Album"}</td>
+              <td className="duration-column">{song.duration || "--:--"}</td>
               <td className="options-column">
                 <button className="more-options">⋮</button>
               </td>

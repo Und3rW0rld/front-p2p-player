@@ -1,0 +1,38 @@
+.friends-button-container {
+    position: fixed;
+    top: 55%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 1000;
+}
+
+.friends-button {
+    background-color: #0d1b2a;
+    color: white;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    padding: 15px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    box-shadow: var(--box-shadow-primary)
+}
+
+.friends-button:hover {
+    background-color: #1b263b;
+}
+
+.friends-panel {
+    position: relative;
+    top: 10px;
+    left: -320px;
+    width: 320px;
+    height: 100%;
+    box-shadow: var(--box-shadow-primary);
+    border-radius: 0 8px 8px 0;
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+}
+
+.friends-panel.open {
+    left: 0;
+}

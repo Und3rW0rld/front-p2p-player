@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import usersData from "../../../assets/mocks/users.json";
 import FriendItem from "../../../components/friendsButton/friendItems/FriendItem";
 import FriendRequestItem from "../../../components/friendsButton/friendItems/FriendRequestItem";
@@ -9,6 +9,8 @@ import "./FriendsList.css";
 const FriendsList = () => {
     const [friends, setFriends] = useState<UserTypes[]>([]);
     const [friendRequests, setFriendRequests] = useState<UserTypes[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [newFriendUserName, setNewFriendUserName] = useState(""); // Nuevo estado para el input
 
     useEffect(() => {
         // Filtrar datos simulando amigos y solicitudes
@@ -33,17 +35,46 @@ const FriendsList = () => {
         setFriends(friends.filter(user => user.userName !== userName));
     };
 
+    const handleSearch = (term: string) => {
+        setSearchTerm(term.toLowerCase());
+    };
+
+    const handleAddFriend = () => {
+        if (!newFriendUserName.trim()) return;
+
+        // Verificar si el usuario ya es amigo
+        if (friends.some(user => user.userName === newFriendUserName)) {
+            alert("This user is already in your friends list.");
+            return;
+        }
+
+        // Crear nuevo amigo ficticio
+        const newFriend: UserTypes = {
+            _id: String(Date.now()), // ID único temporal
+            userName: newFriendUserName,
+            image: "https://robohash.org/mail@ashallendesign.co.uk", // Imagen temporal
+            email: "userFake@web.co"
+        };
+
+        setFriends([...friends, newFriend]);
+        setNewFriendUserName(""); // Limpiar input
+    };
+
+    const filteredFriends = friends.filter(user => user.userName.toLowerCase().includes(searchTerm));
+    const filteredFriendRequests = friendRequests.filter(user => user.userName.toLowerCase().includes(searchTerm));
+
     return (
         <div className="friends-menu">
             <div className="friends-header">
                 <h1>Friends</h1>
-                <SearchBar placeholder="Search" onSearch={() => { }} />
+                <SearchBar placeholder="Search" onSearch={handleSearch} />
             </div>
+
             <div className="friends-list">
-                {friends.length > 0 ? (
-                    friends.map(user => (
+                {filteredFriends.length > 0 ? (
+                    filteredFriends.map(user => (
                         <FriendItem
-                            key={user.userName}
+                            key={user._id}
                             avatar={user.image}
                             username={user.userName}
                             onRemove={() => handleRemove(user.userName)}
@@ -56,10 +87,10 @@ const FriendsList = () => {
 
             <h2>Friend Requests</h2>
             <div className="friend-requests-list">
-                {friendRequests.length > 0 ? (
-                    friendRequests.map(user => (
+                {filteredFriendRequests.length > 0 ? (
+                    filteredFriendRequests.map(user => (
                         <FriendRequestItem
-                            key={user.userName}
+                            key={user._id}
                             avatar={user.image}
                             username={user.userName}
                             onAccept={() => handleAccept(user.userName)}
@@ -69,6 +100,16 @@ const FriendsList = () => {
                 ) : (
                     <p>No friend requests.</p>
                 )}
+            </div>
+            {/* Nuevo campo para agregar amigo */}
+            <div className="add-friend-container">
+                <input
+                    type="text"
+                    placeholder="Enter username"
+                    value={newFriendUserName}
+                    onChange={(e) => setNewFriendUserName(e.target.value)}
+                />
+                <button onClick={handleAddFriend}>Add Friend</button>
             </div>
         </div>
     );
