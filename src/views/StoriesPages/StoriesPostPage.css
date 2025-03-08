@@ -33,6 +33,7 @@
     border: 1px solid var(--primary-color);
     border-radius: 8px;
     background-color: var(--background-color);
+    height: 60vh;
 }
 
 .song-selection h3,

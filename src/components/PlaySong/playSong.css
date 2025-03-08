@@ -1,0 +1,5 @@
+.play-song {
+  img {
+    transform: rotate(270deg);
+  }
+}

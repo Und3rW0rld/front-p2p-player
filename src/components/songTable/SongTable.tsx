@@ -15,11 +15,19 @@ interface SongsData {
 
 interface SongTableProps {
   songs: SongsData;
+  onSongSelect?: (song: string) => void;
 }
 
-const SongTable = ({ songs }: SongTableProps) => {
+const SongTable = ({ songs, onSongSelect }: SongTableProps) => {
   const [currentPlaying, setCurrentPlaying] = useState<string | null>(null);
-  
+
+  const songClickHandler = (song: string) => {
+    setCurrentPlaying(song);
+    if (onSongSelect) {
+      onSongSelect(song);
+    }
+  }
+
   const songsArray = Object.entries(songs).map(([id, song]) => ({
     id,
     ...song
@@ -27,8 +35,8 @@ const SongTable = ({ songs }: SongTableProps) => {
 
   return (
     <div className="song-table-container">
-     
-      
+
+
       <table className="song-table">
         <thead>
           <tr>
@@ -42,10 +50,10 @@ const SongTable = ({ songs }: SongTableProps) => {
         </thead>
         <tbody>
           {songsArray.map((song) => (
-            <tr 
-              key={song.id} 
+            <tr
+              key={song.id}
               className={currentPlaying === song.id ? "playing" : ""}
-              onClick={() => setCurrentPlaying(song.id)}
+              onClick={() => songClickHandler(song.id)}
             >
               <td className="handle-column">
                 <div className="drag-handle">

@@ -17,6 +17,8 @@
   --primary-color-opacity: 4, 137, 224;
   --secondary-color-opacity: 255, 255, 255;
   --quaternary-color-opacity: 4, 116, 148;
+  --box-shadow-primary: 0px 0px 10px 2px rgba(40, 162, 255, 0.556);
+  --box-shadow-secondary: 0px 0px 10px 4px rgba(155, 40, 255, 0.8);
 }
 
 body {

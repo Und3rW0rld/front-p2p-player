@@ -1,7 +1,66 @@
-.column {
-  border: none;
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 0;
-  gap: 1.5rem;
+.draggable-song-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  color: #fff;
+  font-family: "Arial", sans-serif;
+
+  thead {
+    border-bottom: 1px solid #333;
+  }
+
+  th {
+    text-align: left;
+    padding: 10px 8px;
+    font-size: 20px;
+    color: var(--tertiary-color);
+    font-weight: normal;
+  }
+
+  td {
+    padding: 10px 8px;
+    font-size: 20px;
+    color: var(--tertiary-color);
+    font-weight: lighter;
+    white-space: nowrap; /* Prevents text from wrapping */
+    overflow: hidden; /* Ensures text doesn't overflow the cell */
+    text-overflow: ellipsis; /* Displays "..." when text is too long */
+    height: 50px; /* Set a fixed row height */
+  }
+
+  th:nth-child(1),
+  td:nth-child(1) {
+    width: 50px; /* Drag handle column */
+  }
+
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: 60px; /* Play button column */
+  }
+
+  th:nth-child(3),
+  td:nth-child(3) {
+    width: 80px; /* Image column */
+  }
+
+  .draggable-song-table th:nth-child(4),
+  .draggable-song-table td:nth-child(4) {
+    width: auto; /* Title column (flexible) */
+  }
+
+  th:nth-child(5),
+  td:nth-child(5) {
+    width: 20%; /* Artist column */
+  }
+
+  th:nth-child(6),
+  td:nth-child(6) {
+    width: 20%; /* Album column */
+  }
+
+  th:nth-child(7),
+  td:nth-child(7) {
+    width: 100px; /* Duration column */
+    text-align: center;
+  }
 }
