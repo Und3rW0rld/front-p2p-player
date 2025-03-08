@@ -1,120 +1,54 @@
-## 🎵 Back Player - API REST
+# front-p2p-player
 
-_Back Player_ es una API REST en **Spring Boot** para gestionar y reproducir canciones, utilizando **MongoDB** como base de datos.  
+## Project Structure
 
-### 🚀 Instalación y Ejecución  
+The project is organized into branches, each representing a feature or component. This approach allows for modular development and easier collaboration.
 
-#### 1️⃣ **Clonar el repositorio**  
-```sh
-git clone https://github.com/ssosag/back-player.git
-cd back-player
-```
+### Branches
 
-#### 2️⃣ **Configurar la base de datos**  
-Asegúrate de tener **MongoDB** instalado y ejecutándose en `localhost:27017`.  
+- **main**: The main branch containing the stable version of the project.
+- **input-component**: Creation of the input component used in forms.
+- **login-form**: Creatino of the login form.
 
-#### 3️⃣ **Compilar el proyecto**  
-```sh
-mvn clean install
-```
+## Project Description
 
-#### 4️⃣ **Ejecutar la aplicación**  
-Puedes iniciar la aplicación de dos maneras:
+`front-p2p-player` is an innovative project that merges social networking functionalities with a passion for music. Users can create accounts and build a network of friends to share and explore music libraries. The system offers high customization, allowing users to listen to or download music shared by friends. A standout feature is the "song of the day" post, similar to social media stories. Additionally, the project includes a peer-to-peer system to optimize file storage and a redundancy strategy for increased security. Features like popular songs, music rotation, and a top 3 songs list for each user are also included.
 
-- **Con Maven**  
-  ```sh
-  mvn spring-boot:run
-  ```
+## Contributing
 
-- **Como un JAR independiente**  
-  ```sh
-  java -jar target/back-player-0.0.1-SNAPSHOT.jar
-  ```
+We welcome contributions to `front-p2p-player`! To contribute, please follow these steps:
 
-La API estará disponible en:  
-🔗 `http://localhost:8080/api/song`
+1. **Fork the repository**: Click the "Fork" button at the top right of this repository to create a copy of the repository on your GitHub account.
 
----
+2. **Clone the repository**: Clone the forked repository to your local machine using the following command:
 
-## 📌 Endpoints  
+   ```bash
+   git clone https://github.com/Und3rW0rld/front-p2p-player.git
+   ```
 
-### 🔍 **Buscar canciones**  
-```http
-GET /api/song
-```
-**Parámetros opcionales:**  
-- `title`: Filtra por título  
-- `username`: Filtra por usuario  
-- `size`: Filtra por tamaño  
-- `fileName`: Filtra por nombre de archivo  
+3. **Create a new branch**: Create a new branch for your feature or bug fix. Use a descriptive name for your branch.
 
-Ejemplo en **Postman** o **cURL**:
-```sh
-curl -X GET "http://localhost:8080/api/song?title=MySong"
-```
+   ```bash
+   git checkout -b your-feature-name
+   ```
 
----
+4. **Make your changes**: Make the necessary changes to the codebase. Ensure your code follows the project's coding standards and conventions.
 
-### 🎵 **Subir una canción**  
-```http
-POST /api/song/upload
-```
-**Body:**  
-- `song` (archivo `multipart/form-data`)  
+5. **Commit your changes**: Commit your changes with a descriptive commit message.
 
-Ejemplo en **Postman**:
-1. En **Body**, selecciona `form-data`.  
-2. Agrega la clave `"song"` y sube un archivo de audio.  
+   ```bash
+   git add .
+   git commit -m "Add description of your changes"
+   ```
 
----
+6. **Push to your branch**: Push your changes to your forked repository.
 
-### ➕ **Crear una canción (sin archivo)**  
-```http
-POST /api/song
-```
-**Body (JSON):**
-```json
-{
-  "title": "Mi Cancion",
-  "username": "usuario123",
-  "size": "5MB",
-  "fileName": "mi_cancion.mp3"
-}
-```
-Ejemplo en **cURL**:
-```sh
-curl -X POST "http://localhost:8080/api/song" -H "Content-Type: application/json" -d '{"title": "Mi Cancion", "username": "usuario123", "size": "5MB", "fileName": "mi_cancion.mp3"}'
-```
+   ```bash
+   git push origin your-feature-name
+   ```
 
----
+7. **Create a Pull Request**: Go to the original repository on GitHub and create a pull request from your forked repository. Provide a clear and descriptive title and description for your pull request.
 
-### 💽 **Descargar una canción**  
-```http
-GET /api/song/{filename}
-```
-Ejemplo:
-```sh
-curl -O http://localhost:8080/api/song/mi_cancion.mp3
-```
+8. **Review process**: Your pull request will be reviewed by the project maintainers. Be prepared to make any necessary changes based on feedback.
 
----
-
-## 🛠 Tecnologías  
-
-- **Spring Boot 3.4.3**  
-- **MongoDB**  
-- **Maven**  
-- **Lombok**  
-- **Spring Security (para cifrado con BCrypt)**  
-
----
-
-## 📝 Notas  
-Si necesitas configurar **CORS**, está habilitado con:  
-```java
-@CrossOrigin(origins = "*", allowedHeaders = "*")
-```
-
-Si tienes problemas con MongoDB, revisa que esté corriendo en `localhost:27017`.
-
----
+Thank you for contributing to `front-p2p-player`!
