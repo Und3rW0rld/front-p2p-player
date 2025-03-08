@@ -13,6 +13,7 @@ import SettingView from "./views/SettingsView/SettingsView";
 import SearchSong from "./views/SearchSong/SearchSong";
 import NavBar from "./components/navBar/navBar";
 import { useEffect } from "react";
+import MainPlayer from "./views/MainPlayer/MainPlayer";
 
 function Layout() {
   const location = useLocation();
@@ -37,6 +38,7 @@ function Layout() {
           <Route path="/friendProfile" element={<FriendProfilePage />} />
           <Route path="/searchSong" element={<SearchSong />} />
           <Route path="/settings" element={<SettingView />} />
+          <Route path="/player" element={<MainPlayer />} />
         </Routes>
       </div>
     </div>

@@ -21,6 +21,20 @@
   --box-shadow-secondary: 0px 0px 10px 4px rgba(155, 40, 255, 0.8);
 }
 
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   background-color: var(--background-color);
 }
+
+
+#root,
+.app-container ,
+.content {
+  height: 100%;
+  width: 100%;
+}
+
