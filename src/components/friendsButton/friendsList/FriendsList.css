@@ -1,0 +1,37 @@
+.friends-menu {
+    padding: 16px;
+    background-color: var(--background-color);
+    color: white;
+    border-radius: 0px 8px 8px 0px;
+    width: 320px;
+    box-shadow: var(--box-shadow-primary);
+
+ .friends-header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 16px;
+ }
+h1 {
+    font-size: 35px;
+    margin-bottom: 16px;
+    margin-right: 10;
+}
+
+h2 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    color: #aaa;
+}
+
+.friends-list,
+.friend-requests-list {
+    margin-top: 12px;
+}
+
+p {
+    font-size: 14px;
+    color: #888;
+}
+}

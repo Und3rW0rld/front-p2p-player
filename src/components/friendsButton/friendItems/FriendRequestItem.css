@@ -1,0 +1,65 @@
+.friend-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+    transition: background 0.3s;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.friend-item:hover {
+    background-color: #15154a;
+}
+
+.friend-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.friend-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.friend-username {
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+}
+
+.friend-request-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.friend-accept-btn, .friend-reject-btn {
+    background: #0475945b;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.friend-accept-btn {
+    color: #4caf50;
+}
+
+.friend-reject-btn {
+    color: #f44336;
+}
+
+.friend-accept-btn:hover {
+    color: #388e3c;
+}
+
+.friend-reject-btn:hover {
+    color: #d32f2f;
+}
