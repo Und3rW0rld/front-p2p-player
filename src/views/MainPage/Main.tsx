@@ -23,6 +23,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
+import Player from "../../components/player/player";
 
 
 const Main: React.FC = () => {
@@ -60,7 +61,7 @@ useEffect(() => {
   setSongs(updatedSongs);
 }, [files, metadata]);
   const getSongPos = (id: number): number => {
-    return songs.findIndex((song: Song) => song.id === id.toString());
+    return songs.findIndex((song: Song) => song._id === id.toString());
   };
 
   const handleDragEnd = (event: any) => {
@@ -86,6 +87,7 @@ useEffect(() => {
   return (
     <>
       <StoriesBar />
+      <Player />
       <FriendsButton />
       <div className="main-page-container">
         <div className="main-page-header">
