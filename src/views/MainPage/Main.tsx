@@ -14,6 +14,7 @@ import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import Upload from "../../assets/icons/upload.svg";
 import FriendsButton from '../../components/friendsButton/FriendsButton';
 
+import Player from "../../components/player/player";
 import {
   closestCorners,
   DndContext,
@@ -23,7 +24,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import Player from "../../components/player/player";
+
 
 
 const Main: React.FC = () => {
@@ -34,34 +35,30 @@ const Main: React.FC = () => {
 
   const [songs, setSongs] = useState<Song[]>([]);
 
-// Update songs when files or metadata change
-useEffect(() => {
+  // Update songs when files or metadata change
+  useEffect(() => {
+    const updatedSongs: Song[] = fileEntries.map(([path, file]) => {
+      const fileMetadata = metadata.get(path); // Retrieve metadata using the path as key
+
+      return {
+        id: path, // Use file path as a unique ID
+        title: fileMetadata?.title || "Unknown Title",
+        artist: fileMetadata?.artist || "Unknown Artist",
+        image: fileMetadata?.image || "https://picsum.photos/200/200", // Default placeholder image
+        album: fileMetadata?.album || "Unknown Album",
+        duration: fileMetadata?.duration
+          ? `${Math.floor(fileMetadata.duration / 60)}:${Math.floor(fileMetadata.duration % 60)
+            .toString()
+            .padStart(2, "0")}`
+            : "0:00", // Convert seconds to mm:ss
+      };
+    });
 
 
-  const updatedSongs: Song[] = fileEntries.map(([path, file]) => {
-    const fileMetadata = metadata.get(path); // Retrieve metadata using the path as key
-
- 
-
-    return {
-      _id: path, // Use file path as a unique ID
-      title: fileMetadata?.title || "Unknown Title",
-      artist: fileMetadata?.artist || "Unknown Artist",
-      image: fileMetadata?.image || "https://picsum.photos/200/200", // Default placeholder image
-      album: fileMetadata?.album || "Unknown Album",
-      duration: fileMetadata?.duration
-        ? `${Math.floor(fileMetadata.duration / 60)}:${Math.floor(fileMetadata.duration % 60)
-          .toString()
-          .padStart(2, "0")}`
-          : "0:00", // Convert seconds to mm:ss
-    };
-  });
-
-
-  setSongs(updatedSongs);
-}, [files, metadata]);
-  const getSongPos = (id: number): number => {
-    return songs.findIndex((song: Song) => song._id === id.toString());
+    setSongs(updatedSongs);
+  }, [files, metadata]);
+    const getSongPos = (id: number): number => {
+      return songs.findIndex((song: Song) => song.id === id.toString());
   };
 
   const handleDragEnd = (event: any) => {

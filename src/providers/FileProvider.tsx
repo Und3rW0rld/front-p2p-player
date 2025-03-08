@@ -91,7 +91,7 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
             // Convert metadata map to an array of Song[]
             const songList: Song[] = Array.from(metadata.entries()).map(([path, data]) => ({
-                _id: path, // Path is the unique ID
+                id: path, // Path is the unique ID
                 title: data.title || "Unknown Title",
                 artist: data.artist || "Unknown Artist",
                 image: data.image || "",
@@ -113,10 +113,10 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const playNextSong = (songs: Song[]) => {
         if (!currentSong) return;
     
-        const currentIndex = songs.findIndex(song => song._id === currentSong);
+        const currentIndex = songs.findIndex(song => song.id === currentSong);
         if (currentIndex !== -1 && currentIndex < songs.length - 1) {
             const nextSong = songs[currentIndex + 1];
-            setCurrentSong(nextSong._id);
+            setCurrentSong(nextSong.id);
         } else {
             console.log("🚀 End of playlist or song not found.");
         }
