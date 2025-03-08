@@ -13,6 +13,7 @@ import SettingView from "./views/SettingsView/SettingsView";
 import SearchSong from "./views/SearchSong/SearchSong";
 import NavBar from "./components/navBar/navBar";
 import { useEffect } from "react";
+import { AuthProvider } from "./context/AuthContext";
 
 function Layout() {
   const location = useLocation();
@@ -46,11 +47,13 @@ function Layout() {
 function App() {
   return (
     <BrowserRouter>
+      <AuthProvider>
       <FileProvider>
         <StoriesProvider>
           <Layout />
         </StoriesProvider>
       </FileProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

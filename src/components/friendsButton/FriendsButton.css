@@ -28,7 +28,7 @@
     left: -360px; /* Oculto por defecto */
     transform: translateY(-50%);
     width: 350px;
-    max-height: 500px;
+    max-height: 430px;
 box-shadow: var(--box-shadow-primary);
     border-radius: 0 8px 8px 0;
     transition: left 0.3s ease-in-out;
