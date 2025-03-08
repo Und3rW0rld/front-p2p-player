@@ -14,6 +14,8 @@ import SpeakerMutedIcon from "../../assets/icons/speaker-muted.svg";
 
 import PlayCurrentSong from "../songControls/PlayCurrentSong";
 import StopCurrentSong from "../songControls/StopCurrentSong";
+import PlayNextSong from "../songControls/PlayNextSong";
+import PlayPreviousSong from "../songControls/PlayPreviousSong";
 
 import { useFileContext } from "../../providers/FileProvider";
 
@@ -36,9 +38,8 @@ const Player: React.FC<PlayerProps> = () => {
     console.log("next song!");
   };
 
-  const play = () => {
-    setPlaying(!isPlaying);
-  };
+
+  
 
   const mute = () => {
     setMuted(!isMuted);
@@ -54,13 +55,13 @@ const Player: React.FC<PlayerProps> = () => {
         <div className="actions">
           <img src={UserProfilePic} alt="Profile image" className="profile-image" />
           <img src={ShuffleIcon} alt="Shuffle" className="shuffle" onClick={shuffle} />
-          <img src={PreviousIcon} alt="Previous" className="previous" onClick={previousSong} />
+          <PlayPreviousSong/>
           {isSongPlaying ? (
             <StopCurrentSong/>
           ) : (
             <PlayCurrentSong/>
           )}
-          <img src={NextIcon} alt="Next" className="next" onClick={nextSong} />
+          <PlayNextSong/>
           <img src={ReplayIcon} alt="Replay" className="replay" onClick={replay} />
           {isMuted ? (
             <img src={SpeakerMutedIcon} alt="Muted" className="speaker" onClick={mute} />

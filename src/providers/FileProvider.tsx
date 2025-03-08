@@ -52,9 +52,11 @@ interface FileContextType {
     currentSong: string | null;
     setCurrentSong: (path: string | null) => void;
     playNextSong: (songs: Song[]) => void;
+    playPreviousSong: (songs: Song[]) => void;
     playCurrentSong: () => void;
     stopCurrentSong: () => void;
     isSongPlaying: boolean;
+    songList: Song[]
     
 }
 
@@ -72,6 +74,18 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 
     const audioElement = document.getElementById("global-audio") as HTMLAudioElement;
+
+    const songList: Song[] = Array.from(metadata.entries()).map(([path, data]) => ({
+        id: path,
+        title: data.title || "Unknown Title",
+        artist: data.artist || "Unknown Artist",
+        image: data.image || "",
+        album: data.album || "Unknown Album",
+        duration: data.duration
+            ? `${Math.floor(data.duration / 60)}:${Math.floor(data.duration % 60).toString().padStart(2, "0")}`
+            : "0:00",
+    }));
+    
 
     // Function to check if file is a music file
     const isMusicFile = (filename: string): boolean => {
@@ -94,15 +108,15 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const handleSongEnd = () => {
             console.log("🎵 Song ended. Playing next song...");
     
-            // Convert metadata map to an array of Song[]
-            const songList: Song[] = Array.from(metadata.entries()).map(([path, data]) => ({
-                id: path, // Path is the unique ID
-                title: data.title || "Unknown Title",
-                artist: data.artist || "Unknown Artist",
-                image: data.image || "",
-                album: data.album || "Unknown Album",
-                duration: data.duration ? `${Math.floor(data.duration / 60)}:${Math.floor(data.duration % 60).toString().padStart(2, "0")}` : "0:00",
-            }));
+            // // Convert metadata map to an array of Song[]
+            // const songList: Song[] = Array.from(metadata.entries()).map(([path, data]) => ({
+            //     id: path, // Path is the unique ID
+            //     title: data.title || "Unknown Title",
+            //     artist: data.artist || "Unknown Artist",
+            //     image: data.image || "",
+            //     album: data.album || "Unknown Album",
+            //     duration: data.duration ? `${Math.floor(data.duration / 60)}:${Math.floor(data.duration % 60).toString().padStart(2, "0")}` : "0:00",
+            // }));
             setIsSongPlaying(false);
             playNextSong(songList); 
         };
@@ -128,6 +142,19 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setIsSongPlaying(true);
         } else {
             console.log("End of playlist or song not found.");
+        }
+    };
+
+    const playPreviousSong = (songs: Song[]) => {
+        if (!currentSong) return;
+    
+        const currentIndex = songs.findIndex(song => song.id === currentSong);
+        if (currentIndex !== -1 && currentIndex > 0) {
+            const prevSong = songs[currentIndex - 1];
+            setCurrentSong(prevSong.id);
+            
+        } else {
+            console.log("First song on playlist or song not found.");
         }
     };
 
@@ -253,9 +280,11 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
             currentSong,
             setCurrentSong,
             playNextSong,
+            playPreviousSong,
             playCurrentSong,
             stopCurrentSong,
-            isSongPlaying
+            isSongPlaying,
+            songList
         }}>
             {children}
             

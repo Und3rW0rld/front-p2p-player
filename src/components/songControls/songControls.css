@@ -6,3 +6,6 @@
     cursor: pointer;
   }
 }
+.previous-button {
+  transform: rotate(180deg);
+}
