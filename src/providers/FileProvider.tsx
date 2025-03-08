@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback , useRef, useEffect} from "react";
+import { createContext, useContext, useState, useCallback ,  useEffect} from "react";
 import { parseBlob } from "music-metadata";
 import { Song } from "../types";
 
@@ -50,8 +50,20 @@ interface FileContextType {
     onDirectorySelection: () => Promise<void>;
     isProcessing: boolean;
     currentSong: string | null;
+
     setCurrentSong: (path: string | null) => void;
-    playNextSong: (songs: Song[]) => void;
+    playNextSong: () => void;
+    playPreviousSong: () => void;
+    playCurrentSong: () => void;
+    stopCurrentSong: () => void;
+    restartCurrentSong: () => void;
+    mutePlayingSong: () => void;
+    setSongList: (songs: Song[]) => void;
+
+    isSongPlaying: boolean;
+    isMuted: boolean;
+    
+    songList: Song[]
     
 }
 
@@ -63,11 +75,35 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [files, setFiles] = useState<Map<string, File>>(new Map());
     const [metadata, setMetadata] = useState<Map<string, FileMetadata>>(new Map());
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
-    
+    const [isSongPlaying, setIsSongPlaying] = useState<boolean>(false);
+    const [isMuted, setIsMuted] = useState<boolean>(false);
+    const [songVolume, setSongVolume] = useState<number>(1);
+
+
     const [currentSong, setCurrentSong] = useState<string | null>(null);
-    const audioRef = useRef<HTMLAudioElement>(null);
+    
 
     const audioElement = document.getElementById("global-audio") as HTMLAudioElement;
+    const [songList, setSongList] = useState<Song[]>([]);
+
+    // Populate songList when metadata changes (only the first time)
+    useEffect(() => {
+        if (songList.length === 0 && metadata.size > 0) {
+            setSongList(
+                Array.from(metadata.entries()).map(([path, data]) => ({
+                    id: path,
+                    title: data.title || "Unknown Title",
+                    artist: data.artist || "Unknown Artist",
+                    image: data.image || "",
+                    album: data.album || "Unknown Album",
+                    duration: data.duration
+                        ? `${Math.floor(data.duration / 60)}:${Math.floor(data.duration % 60).toString().padStart(2, "0")}`
+                        : "0:00",
+                }))
+            );
+        }
+    }, [metadata]); 
+    
 
     // Function to check if file is a music file
     const isMusicFile = (filename: string): boolean => {
@@ -83,23 +119,14 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
         const objectUrl = URL.createObjectURL(file);
         audioElement.src = objectUrl;
+        audioElement.volume = songVolume;
         audioElement.play();
+        setIsSongPlaying(true);
     
-        // ✅ Listen for when the song finishes
         const handleSongEnd = () => {
             console.log("🎵 Song ended. Playing next song...");
-    
-            // Convert metadata map to an array of Song[]
-            const songList: Song[] = Array.from(metadata.entries()).map(([path, data]) => ({
-                id: path, // Path is the unique ID
-                title: data.title || "Unknown Title",
-                artist: data.artist || "Unknown Artist",
-                image: data.image || "",
-                album: data.album || "Unknown Album",
-                duration: data.duration ? `${Math.floor(data.duration / 60)}:${Math.floor(data.duration % 60).toString().padStart(2, "0")}` : "0:00",
-            }));
-    
-            playNextSong(songList); // ✅ Now passing a proper Song[] array
+            setIsSongPlaying(false);
+            playNextSong(); 
         };
     
         audioElement.addEventListener("ended", handleSongEnd);
@@ -108,20 +135,77 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
             URL.revokeObjectURL(objectUrl);
             audioElement.removeEventListener("ended", handleSongEnd);
         };
-    }, [currentSong]); // Only runs when the song changes
+    }, [currentSong, songVolume]); // ✅ Depend on songVolume
+    
 
-    const playNextSong = (songs: Song[]) => {
+
+    //Song Controls
+
+    const playNextSong = () => {
         if (!currentSong) return;
     
-        const currentIndex = songs.findIndex(song => song.id === currentSong);
-        if (currentIndex !== -1 && currentIndex < songs.length - 1) {
-            const nextSong = songs[currentIndex + 1];
+        const currentIndex = songList.findIndex(song => song.id === currentSong);
+        if (currentIndex !== -1 && currentIndex < songList.length - 1) {
+            const nextSong = songList[currentIndex + 1];
             setCurrentSong(nextSong.id);
+            setIsSongPlaying(true);
         } else {
-            console.log("🚀 End of playlist or song not found.");
+            console.log("End of playlist or song not found.");
+        }
+    };
+
+    const playPreviousSong = () => {
+        if (!currentSong) return;
+    
+        const currentIndex = songList.findIndex(song => song.id === currentSong);
+        if (currentIndex !== -1 && currentIndex > 0) {
+            const prevSong = songList[currentIndex - 1];
+            setCurrentSong(prevSong.id);
+            
+        } else {
+            console.log("First song on playlist or song not found.");
+        }
+    };
+
+    const playCurrentSong = () => {
+        if (audioElement && currentSong) {
+            audioElement.play().catch(err => console.error("Error playing audio:", err));
+            setIsSongPlaying(true);
         }
     };
     
+    const stopCurrentSong = () => {
+        if (audioElement) {
+            audioElement.pause();
+            setIsSongPlaying(false);
+       
+        }
+    };
+    
+    
+
+    const restartCurrentSong = () => {
+        if (audioElement) {
+            audioElement.currentTime = 0; // Reset to beginning
+        }
+    };
+    
+
+    const mutePlayingSong = () => {
+        if (!audioElement) return;
+    
+        if (audioElement.volume > 0) {
+            setSongVolume(audioElement.volume); // Save current volume before muting
+            audioElement.volume = 0;
+            setIsMuted(true);
+        } else {
+            audioElement.volume = songVolume; // Restore previous volume
+            setIsMuted(false);
+        }
+    };
+    
+    
+
     // Process a file to extract metadata and add to state
     const processFile = async (path: string, file: File) => {
     try {
@@ -229,7 +313,15 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
             currentSong,
             setCurrentSong,
             playNextSong,
-            
+            playPreviousSong,
+            playCurrentSong,
+            stopCurrentSong,
+            restartCurrentSong,
+            mutePlayingSong,
+            isSongPlaying,
+            setSongList,
+            isMuted,
+            songList
         }}>
             {children}
             
