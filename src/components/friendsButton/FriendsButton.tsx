@@ -11,12 +11,12 @@ const FriendsButton = () => {
   };
 
   return (
-    <div className="friends-button-container">
+    <div className={`friends-container`} >
       <button className="friends-button" onClick={toggleFriendsList}>
         <FaUserFriends size={24} />
       </button>
 
-      <div className={`friends-panel ${isOpen ? "open" : ""}`}>
+      <div className={`friends-panel ${isOpen ? "open" : "closed"}`}>
         <FriendsList />
       </div>
     </div>
