@@ -1,6 +1,7 @@
 .draggable-song-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
   color: #fff;
   font-family: "Arial", sans-serif;
 
@@ -21,6 +22,10 @@
     font-size: 20px;
     color: var(--tertiary-color);
     font-weight: lighter;
+    white-space: nowrap; /* Prevents text from wrapping */
+    overflow: hidden; /* Ensures text doesn't overflow the cell */
+    text-overflow: ellipsis; /* Displays "..." when text is too long */
+    height: 50px; /* Set a fixed row height */
   }
 
   th:nth-child(1),
