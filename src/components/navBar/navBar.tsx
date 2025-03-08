@@ -2,14 +2,18 @@ import { FaHome, FaPlay, FaSearch, FaCog } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import UserProfMockImg from "../../assets/img/userProfilePicMock.jpg";
 import "./NavBar.css"; // Estilos personalizados
+import { User } from "../../types";
 
 const NavBar = () => {
+    const user = JSON.parse(localStorage.getItem("user") || "null") as User;
+
+    const userImg = user.imageUrl ? user.imageUrl : UserProfMockImg;
     return (
         <nav className="navbar">
             <ul>
                 <li>
                     <NavLink to="/userpage" className="nav-icon">
-                        <img src={UserProfMockImg} alt="Profile 1" className="profile-img" />
+                        <img src={userImg} alt="Profile 1" className="profile-img" />
                     </NavLink>
                 </li>
                 <li>

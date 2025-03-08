@@ -1,5 +1,7 @@
 import "./userProfile.css"
 
+import { useNavigate } from "react-router-dom";
+
 import EditButtonSVG from "../../assets/icons/edit-pwd.svg"
 
 interface UserProfileProps {
@@ -10,11 +12,12 @@ interface UserProfileProps {
 }
 
 const UserProfile = ({name, description, image, banner}: UserProfileProps) => {
+    const navigate = useNavigate();
     return (
     <>
     <div className="user-profile-container">
         <div className="user-profile-left">
-            <img src = {EditButtonSVG} className="edit-icon"/>
+            <img src = {EditButtonSVG} className="edit-icon" onClick={() => navigate("/settings")}/>
             <div className = "user-data">
                 <img src= {image} alt = "Profile picture"/>
                 <h2 className="user-name"> {name} </h2>

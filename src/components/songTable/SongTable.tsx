@@ -33,9 +33,9 @@ const SongTable = ({ songs, onSongSelect }: SongTableProps) => {
         <tbody>
           {songs.map((song) => (
             <tr
-              key={song._id}
-              className={currentPlaying === song._id ? "playing" : ""}
-              onClick={() => songClickHandler(song._id)}
+              key={song.id}
+              className={currentPlaying === song.id ? "playing" : ""}
+              onClick={() => songClickHandler(song.id)}
             >
               <td className="handle-column">
                 <div className="drag-handle">

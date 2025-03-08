@@ -1,5 +1,5 @@
 export interface Song {
-  _id: string;
+  id: string;
   title?: string;
   artist?: string;
   image?: string;
@@ -8,14 +8,15 @@ export interface Song {
 }
 
 export interface User {
-  _id: string;
-  userName: string;
+  id: string;
+  username: string;
   email: string;
-  image: string;
+  imageUrl: string;
+  bannerUrl: string;
 }
 
 export interface Story {
-  _id: string;
+  id: string;
   idUser: string;
   image: string;
   idSong: string;
@@ -23,7 +24,7 @@ export interface Story {
 }
 
 export interface SongFile {
-  _id: string
+  id: string
   idSong: string;
   idUser: string;
   fileSize: string;

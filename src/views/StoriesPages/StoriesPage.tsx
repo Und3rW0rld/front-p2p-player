@@ -15,13 +15,13 @@ const StoriesPage = () => {
     // 🔹 Tipar `stories` correctamente
     const storiesArray = storiesData as StoryType[];
     const stories: Record<string, StoryType> = storiesArray.reduce((acc, story) => {
-        acc[story._id] = story; // Usamos `_id` como clave en el objeto
+        acc[story.id] = story; // Usamos `id` como clave en el objeto
         return acc;
     }, {} as Record<string, StoryType>);
     const storyList = Object.values(stories);
 
-    // 🔹 Buscar la historia con el `_id`
-    const story = storyList.find((s) => s._id === idUser) || null;
+    // 🔹 Buscar la historia con el `id`
+    const story = storyList.find((s) => s.id === idUser) || null;
 
     // 🔹 Si la historia no existe, mostramos un mensaje de error
     if (!story) {
@@ -29,14 +29,14 @@ const StoriesPage = () => {
     }
 
     // 🔹 Obtener índice de la historia actual en la lista
-    const currentIndex = storyList.findIndex((s) => s._id === idUser);
-    const prevUserId = currentIndex > 0 ? storyList[currentIndex - 1]._id : null;
-    const nextUserId = currentIndex < storyList.length - 1 ? storyList[currentIndex + 1]._id : null;
+    const currentIndex = storyList.findIndex((s) => s.id === idUser);
+    const prevUserId = currentIndex > 0 ? storyList[currentIndex - 1].id : null;
+    const nextUserId = currentIndex < storyList.length - 1 ? storyList[currentIndex + 1].id : null;
 
     // 🔹 Manejo de canción
     const songsArray = songsData as SongType[];
     const songs: Record<string, SongType> = songsArray.reduce((acc, song) => {
-        acc[song._id] = song; // Usamos `_id` como clave
+        acc[song.id] = song; // Usamos `id` como clave
         return acc;
     }, {} as Record<string, SongType>);
     const songData = songs[story.idSong] || null;

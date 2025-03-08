@@ -25,12 +25,12 @@ const SearchSong = () => {
     };
 
     const songsMap: Record<string, { title: string }> = (songsData as any[]).reduce((acc, song) => {
-        acc[song._id] = song;
+        acc[song.id] = song;
         return acc;
     }, {});
 
     const usersMap: Record<string, { userName: string }> = (usersData as any[]).reduce((acc, user) => {
-        acc[user._id] = user;
+        acc[user.id] = user;
         return acc;
     }, {});
 

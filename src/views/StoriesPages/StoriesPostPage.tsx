@@ -26,7 +26,7 @@ const StoriesPostPage = () => {
     );
 
     const handleSongSelect = (songId: string) => {
-        const song = Object.values(songsData).find((song) => song._id === songId) || null;
+        const song = Object.values(songsData).find((song) => song.id === songId) || null;
         setSelectedSong(song);
     };
 

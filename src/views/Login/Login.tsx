@@ -1,24 +1,29 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext"; // ✅ Importar el contexto
 import Input from "../../components/input/Input";
-import { authService } from "../../api/authService"; // Importamos authService
 import LoginImg from "../../assets/img/login-img.png";
 import "./login.css";
 
 const Login = () => {
   const navigate = useNavigate();
+  const authContext = useContext(AuthContext); // ✅ Acceder al contexto
 
-  // Estado del formulario
+  if (!authContext) {
+    console.error("❌ Error: AuthContext es null. Verifica que `AuthProvider` está envolviendo tu app.");
+    return null;
+  }
+
+  const { login } = authContext; // ✅ Obtener la función login
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
 
-  // Estado de carga y errores
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Manejo de cambios en los inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -26,20 +31,22 @@ const Login = () => {
     });
   };
 
-  // Manejo del login con la API
   const handleLogin = async () => {
+    if (!login) {
+      console.error("❌ Error: `login` no está definido en `AuthContext`.");
+      return;
+    }
+
     setError(null);
     setLoading(true);
 
     try {
-      const data = await authService.login(formData); // Usamos authService
-      localStorage.setItem("token", data.token); // Guardamos el token
-
-      console.log("Login exitoso:", data);
-      
-      navigate("/main"); // Redirigir al usuario después del login
+      console.log("📢 Llamando a login con:", formData);
+      await login(formData.username, formData.password); // ✅ Llamar a login del contexto
+      navigate("/main"); // ✅ Redirigir al usuario
     } catch (err: any) {
-      setError(err.response?.data?.message || "Error al iniciar sesión");
+      console.error("❌ Error en el login:", err);
+      setError(err.message || "Error al iniciar sesión");
     } finally {
       setLoading(false);
     }
@@ -54,7 +61,7 @@ const Login = () => {
       <div className="form-container">
         <div className="login-form">
           <h2 className="login-title">LOGIN</h2>
-          {error && <p className="error-message">{error}</p>} {/* Mostrar error si existe */}
+          {error && <p className="error-message">{error}</p>}
           <Input
             label="Username"
             placeholder="Enter your username"
@@ -80,11 +87,7 @@ const Login = () => {
           />
           <div className="change-form-btns">
             <input type="button" value="Login" className="active-btn" />
-            <input
-              type="button"
-              value="Register"
-              onClick={() => navigate("/register")}
-            />
+            <input type="button" value="Register" onClick={() => navigate("/register")} />
           </div>
         </div>
       </div>

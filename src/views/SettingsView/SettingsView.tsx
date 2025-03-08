@@ -1,17 +1,24 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom"; // 🔥 Importa useNavigate
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
 import UserProfMockImg from "../../assets/img/userProfilePicMock.jpg";
+import { uploadUserImage, updateUser} from "../../api/userService";
 import "./settingsView.css";
+import { User } from "../../types";
 
 const SettingView = () => {
+    const user = JSON.parse(localStorage.getItem("user") || "null") as User;
+    console.log("User:", user);
+
     const authContext = useContext(AuthContext);
     const logout = authContext?.logout;
-    const navigate = useNavigate(); // 🔥 Hook para navegar entre páginas
+    const navigate = useNavigate();
 
-    const [username, setUsername] = useState("");
+    const [isUploading, setIsUploading] = useState(false);
+    const [profileImage, setProfileImage] = useState(user.imageUrl || UserProfMockImg);
+    const [username, setUsername] = useState(user.username || "");
     const [newPassword, setNewPassword] = useState("");
     const [oldPassword, setOldPassword] = useState("");
 
@@ -22,6 +29,36 @@ const SettingView = () => {
         }
     };
 
+    const handleProfileImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        console.log("Selected file:", file);
+        if (!file) return;
+
+        setIsUploading(true);
+        try {
+            const uploadedImageUrl = await uploadUserImage(file);
+            setProfileImage(uploadedImageUrl);
+            const updatedUser = { ...user, imageUrl: uploadedImageUrl };
+            await updateUser(user.id, updatedUser);
+            
+            console.log("Image uploaded successfully:", uploadedImageUrl);
+        } catch (error) {
+            console.error("Error uploading image:", error);
+        } finally {
+            setIsUploading(false);
+        }
+    };
+
+    const handleSaveUsername = () => {
+        const updatedUser = { ...user, username: username };
+        updateUser(user.id, updatedUser)
+            .then(() => {
+            console.log("Username updated successfully:", username);
+            })
+            .catch((error) => {
+            console.error("Error updating username:", error);
+            });
+    }
     return (
         <div className="settings-container">
             <div className="settings-header">
@@ -33,8 +70,15 @@ const SettingView = () => {
                     </p>
                 </div>
                 <div className="profile-image-container">
-                    <img src={UserProfMockImg} alt="Profile" className="profile-image" />
+                    <img src={profileImage} alt="Profile" className="profile-image" />
                     <div className="change-image-overlay">+</div>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        className="change-image-input"
+                        onChange={handleProfileImageChange}
+                        disabled={isUploading}
+                    />
                 </div>
             </div>
 
@@ -49,7 +93,7 @@ const SettingView = () => {
                         onChange={(e) => setUsername(e.target.value)}
                         is_password={false}
                     />
-                    <Button label="Save" onClick={() => console.log("Saved username:", username)} />
+                    <Button label="Save" onClick={handleSaveUsername} />
                 </div>
             </div>
 

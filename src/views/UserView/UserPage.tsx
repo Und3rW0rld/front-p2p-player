@@ -9,18 +9,23 @@ import TopSongs from "../../components/topSongs/TopSongs.tsx";
 import UserPlaylists from "../../components/userPlaylists/UserPlaylists.tsx"; 
 import SongTable from "../../components/songTable/SongTable.tsx";
 import UserProfile from "../../components/userProfile/UserProfile.tsx";
-
-var userName:string = "YOUR_USERNAME";
-var userDescription = "Me gusta el pop polaco"
+import { User } from "../../types.ts";
 
 const UserPage = () => {
+    const user = JSON.parse(localStorage.getItem("user") || "null") as User;
+
+    const userName = user.username;
+    const userImg = user.imageUrl ? user.imageUrl : UserProfMockImg;
+    const userBanner = user.bannerUrl ? user.bannerUrl : BannerMockImg;
+
+
     return (
         <>
         <div className = "user-page-container">
             <UserProfile name={userName} 
-                description={userDescription} 
-                image={UserProfMockImg}
-                banner={BannerMockImg}/>
+                description={""} 
+                image={userImg}
+                banner={userBanner}/>
 
             <div className="top-songs-container">
                 <h1 >

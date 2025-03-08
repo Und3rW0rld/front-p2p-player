@@ -1,18 +1,18 @@
 [
   {
-    "_id": "1",
+    "id": "1",
     "userName": "userName1",
     "email": "userName1@example.com",
     "image": "https://taz.de/picture/7398464/1200/37153182-1.jpeg"
   },
   {
-    "_id": "2",
+    "id": "2",
     "userName": "userName2",
     "email": "userName2@example.com",
     "image": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/74/d1/d1/74d1d152-4513-a1f6-4868-4d58a0b3a242/0.jpg/1380x1380bb.webp"
   },
   {
-    "_id": "3",
+    "id": "3",
     "userName": "userName3",
     "email": "userName3@example.com",
     "image": "https://i.scdn.co/image/ab67616d0000b273b67361e263742269a1a4c928"

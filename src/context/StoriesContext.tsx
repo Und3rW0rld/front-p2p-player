@@ -19,7 +19,6 @@ export const StoriesProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [users, setUsers] = useState<User[]>([]);
 
     useEffect(() => {
-        console.log(storiesData);
         setStories(storiesData);
         setUsers(usersData);
     }, []);

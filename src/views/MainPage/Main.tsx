@@ -44,7 +44,7 @@ useEffect(() => {
  
 
     return {
-      _id: path, // Use file path as a unique ID
+      id: path, // Use file path as a unique ID
       title: fileMetadata?.title || "Unknown Title",
       artist: fileMetadata?.artist || "Unknown Artist",
       image: fileMetadata?.image || "https://picsum.photos/200/200", // Default placeholder image
@@ -61,7 +61,7 @@ useEffect(() => {
   setSongs(updatedSongs);
 }, [files, metadata]);
   const getSongPos = (id: number): number => {
-    return songs.findIndex((song: Song) => song._id === id.toString());
+    return songs.findIndex((song: Song) => song.id === id.toString());
   };
 
   const handleDragEnd = (event: any) => {

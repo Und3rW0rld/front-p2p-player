@@ -7,8 +7,18 @@ export const authService = {
   },
 
   login: async (credentials: { username: string; password: string }) => {
-    const response = await api.post("/login", credentials);
-    return response.data;
+    console.log("📡 Enviando solicitud de login con:", credentials);
+  
+    try {
+      const response = await api.post("/login", credentials);
+  
+      console.log("✅ Respuesta recibida de la API:", response);
+  
+      return response.data;
+    } catch (error) {
+      console.error("🔴 Error en authService.login():", error);
+      throw error; // Relanzamos el error para que el componente lo maneje
+    }
   },
 
   logout: () => {

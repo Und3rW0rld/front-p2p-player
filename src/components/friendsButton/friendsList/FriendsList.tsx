@@ -50,7 +50,7 @@ const FriendsList = () => {
 
         // Crear nuevo amigo ficticio
         const newFriend: UserTypes = {
-            _id: String(Date.now()), // ID único temporal
+            id: String(Date.now()), // ID único temporal
             userName: newFriendUserName,
             image: "https://robohash.org/mail@ashallendesign.co.uk", // Imagen temporal
             email: "userFake@web.co"
@@ -74,7 +74,7 @@ const FriendsList = () => {
                 {filteredFriends.length > 0 ? (
                     filteredFriends.map(user => (
                         <FriendItem
-                            key={user._id}
+                            key={user.id}
                             avatar={user.image}
                             username={user.userName}
                             onRemove={() => handleRemove(user.userName)}
@@ -90,7 +90,7 @@ const FriendsList = () => {
                 {filteredFriendRequests.length > 0 ? (
                     filteredFriendRequests.map(user => (
                         <FriendRequestItem
-                            key={user._id}
+                            key={user.id}
                             avatar={user.image}
                             username={user.userName}
                             onAccept={() => handleAccept(user.userName)}

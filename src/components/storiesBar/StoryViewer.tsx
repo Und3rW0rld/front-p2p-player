@@ -10,15 +10,15 @@ interface StoryViewerProps {
 const StoryViewer: React.FC<StoryViewerProps> = ({ story }) => {
     const { users } = useStories();
 
-    // Buscar el usuario usando `_id`
-    const user = users.find((u) => u._id === story.idUser) || {
+    // Buscar el usuario usando `id`
+    const user = users.find((u) => u.id === story.idUser) || {
         userName: "Usuario desconocido",
         image: "/assets/img/default-user.jpg",
     };
 
-    // Buscar la canción usando `_id`
+    // Buscar la canción usando `id`
     const song = story.idSong
-        ? songs.find((s) => s._id === story.idSong) || { 
+        ? songs.find((s) => s.id === story.idSong) || { 
             title: "Canción desconocida", 
             artist: "Artista desconocido",
             album: "Álbum desconocido",

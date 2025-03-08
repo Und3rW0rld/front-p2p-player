@@ -4,8 +4,12 @@ import addIcon from "../../assets/icons/add-story.svg";
 import UserProfMockImg from "../../assets/img/userProfilePicMock.jpg";
 import StoryAvatar from "./StoryAvatar";
 import "./StoriesBar.css";
+import { User } from "../../types";
 
 const StoriesBar: React.FC = () => {
+    const user = JSON.parse(localStorage.getItem("user") || "null") as User;
+    const userImg = user.imageUrl ? user.imageUrl : UserProfMockImg;
+
     const { selectedStory, setSelectedStory, stories, users } = useStories();
     const navigate = useNavigate();
 
@@ -25,7 +29,7 @@ const StoriesBar: React.FC = () => {
                 {/* Avatar del usuario actual */}
                 <div className="story">
                     <div className="avatar-wrapper">
-                        <StoryAvatar key="me" image={UserProfMockImg} isSelected={selectedStory === "me"} onClick={handleAddStory} />
+                        <StoryAvatar key="me" image={userImg} isSelected={selectedStory === "me"} onClick={handleAddStory} />
                         <img src={addIcon} alt="Add Story" className="add-story-icon" />
                     </div>
                     <p className="story-text">You</p>
