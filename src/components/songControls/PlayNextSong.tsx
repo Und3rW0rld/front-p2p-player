@@ -1,3 +1,5 @@
+import "./songControls.css"
+
 import React from "react";
 import { useFileContext } from "../../providers/FileProvider";
 import NextIcon from "../../assets/icons/next.svg";
@@ -12,7 +14,7 @@ const NextSongButton: React.FC = () => {
             console.warn("No songs available to play.");
             return;
         }
-        playNextSong(songList); // ✅ Pass the song list to play the next track
+        playNextSong(songList); // Pass the song list to play the next track
     };
 
     return (

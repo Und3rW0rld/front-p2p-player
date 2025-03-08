@@ -50,12 +50,19 @@ interface FileContextType {
     onDirectorySelection: () => Promise<void>;
     isProcessing: boolean;
     currentSong: string | null;
+
     setCurrentSong: (path: string | null) => void;
     playNextSong: (songs: Song[]) => void;
     playPreviousSong: (songs: Song[]) => void;
     playCurrentSong: () => void;
     stopCurrentSong: () => void;
+    restartCurrentSong: () => void;
+    mutePlayingSong: () => void;
+    
+
     isSongPlaying: boolean;
+    isMuted: boolean;
+    
     songList: Song[]
     
 }
@@ -69,7 +76,10 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [metadata, setMetadata] = useState<Map<string, FileMetadata>>(new Map());
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [isSongPlaying, setIsSongPlaying] = useState<boolean>(false);
-    
+    const [isMuted, setIsMuted] = useState<boolean>(false);
+    const [songVolume, setSongVolume] = useState<number>(1);
+
+
     const [currentSong, setCurrentSong] = useState<string | null>(null);
 
 
@@ -101,22 +111,12 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
         const objectUrl = URL.createObjectURL(file);
         audioElement.src = objectUrl;
+        audioElement.volume = songVolume;
         audioElement.play();
         setIsSongPlaying(true);
     
-        // ✅ Listen for when the song finishes
         const handleSongEnd = () => {
             console.log("🎵 Song ended. Playing next song...");
-    
-            // // Convert metadata map to an array of Song[]
-            // const songList: Song[] = Array.from(metadata.entries()).map(([path, data]) => ({
-            //     id: path, // Path is the unique ID
-            //     title: data.title || "Unknown Title",
-            //     artist: data.artist || "Unknown Artist",
-            //     image: data.image || "",
-            //     album: data.album || "Unknown Album",
-            //     duration: data.duration ? `${Math.floor(data.duration / 60)}:${Math.floor(data.duration % 60).toString().padStart(2, "0")}` : "0:00",
-            // }));
             setIsSongPlaying(false);
             playNextSong(songList); 
         };
@@ -127,7 +127,8 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
             URL.revokeObjectURL(objectUrl);
             audioElement.removeEventListener("ended", handleSongEnd);
         };
-    }, [currentSong]); // Only runs when the song changes
+    }, [currentSong, songVolume]); // ✅ Depend on songVolume
+    
 
 
     //Song Controls
@@ -169,10 +170,34 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (audioElement) {
             audioElement.pause();
             setIsSongPlaying(false);
-            // audioElement.currentTime = 0; // Reset to beginning
+       
         }
     };
     
+    
+
+    const restartCurrentSong = () => {
+        if (audioElement) {
+            audioElement.currentTime = 0; // Reset to beginning
+        }
+    };
+    
+
+    const mutePlayingSong = () => {
+        if (!audioElement) return;
+    
+        if (audioElement.volume > 0) {
+            setSongVolume(audioElement.volume); // Save current volume before muting
+            audioElement.volume = 0;
+            setIsMuted(true);
+        } else {
+            audioElement.volume = songVolume; // Restore previous volume
+            setIsMuted(false);
+        }
+    };
+    
+    
+
     // Process a file to extract metadata and add to state
     const processFile = async (path: string, file: File) => {
     try {
@@ -283,7 +308,11 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
             playPreviousSong,
             playCurrentSong,
             stopCurrentSong,
+            restartCurrentSong,
+            mutePlayingSong,
             isSongPlaying,
+            
+            isMuted,
             songList
         }}>
             {children}

@@ -2,42 +2,31 @@ import "./player.css";
 import React, { useState } from "react";
 
 
-import UserProfilePic from "../../assets/img/userProfilePicMock.jpg";
+
 import ShuffleIcon from "../../assets/icons/shuffle.svg";
-import PreviousIcon from "../../assets/icons/next.svg"; 
-import PlayIcon from "../../assets/icons/play.svg";
-import PauseIcon from "../../assets/icons/pause.svg";
-import NextIcon from "../../assets/icons/next.svg";
-import ReplayIcon from "../../assets/icons/replay.svg";
-import SpeakerIcon from "../../assets/icons/speaker.svg";
-import SpeakerMutedIcon from "../../assets/icons/speaker-muted.svg";
+
+
+
+
 
 import PlayCurrentSong from "../songControls/PlayCurrentSong";
 import StopCurrentSong from "../songControls/StopCurrentSong";
 import PlayNextSong from "../songControls/PlayNextSong";
 import PlayPreviousSong from "../songControls/PlayPreviousSong";
+import Restart from "../songControls/Restart.tsx";
+import Mute from "../songControls/Mute.tsx"
 
 import { useFileContext } from "../../providers/FileProvider";
 
 interface PlayerProps {}
 
 const Player: React.FC<PlayerProps> = () => {
-  const { isSongPlaying} = useFileContext();
-  const [isPlaying, setPlaying] = useState(false);
+  const { isSongPlaying, currentSong, metadata} = useFileContext();
   const [isMuted, setMuted] = useState(false);
 
   const shuffle = () => {
     console.log("shuffle!");
   };
-
-  const previousSong = () => {
-    console.log("previous song!");
-  };
-
-  const nextSong = () => {
-    console.log("next song!");
-  };
-
 
   
 
@@ -45,16 +34,15 @@ const Player: React.FC<PlayerProps> = () => {
     setMuted(!isMuted);
   };
 
-  const replay = () => {
-    console.log("replay!");
-  };
+  const currentSongMetadata = currentSong ? metadata.get(currentSong) : null;
+  const currentSongImage = currentSongMetadata?.image || "https://cdn-icons-png.flaticon.com/512/44/44091.png"; // Default placeholder
 
   return (
     <div className="player-wrapper">
       <div className="player">
         <div className="actions">
-          <img src={UserProfilePic} alt="Profile image" className="profile-image" />
-          <img src={ShuffleIcon} alt="Shuffle" className="shuffle" onClick={shuffle} />
+          <img src={currentSongImage} alt="Song Cover" className="profile-image" />
+          
           <PlayPreviousSong/>
           {isSongPlaying ? (
             <StopCurrentSong/>
@@ -62,18 +50,10 @@ const Player: React.FC<PlayerProps> = () => {
             <PlayCurrentSong/>
           )}
           <PlayNextSong/>
-          <img src={ReplayIcon} alt="Replay" className="replay" onClick={replay} />
-          {isMuted ? (
-            <img src={SpeakerMutedIcon} alt="Muted" className="speaker" onClick={mute} />
-          ) : (
-            <img src={SpeakerIcon} alt="Unmuted" className="speaker" onClick={mute} />
-          )}
+          <Restart/>
+          <Mute/>
         </div>
-        <div className="progress">
-          <div className="progress-line">
-            <div className="current-progress" style={{ width: "80%" }}></div>
-          </div>
-        </div>
+        
       </div>
     </div>
   );

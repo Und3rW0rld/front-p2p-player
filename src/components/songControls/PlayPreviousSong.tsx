@@ -1,3 +1,4 @@
+import "./songControls.css"
 import React from "react";
 import { useFileContext } from "../../providers/FileProvider";
 
@@ -14,7 +15,7 @@ const PreviousSongButton: React.FC = () => {
             console.warn("No songs available to play.");
             return;
         }
-        playPreviousSong(songList); // ✅ Pass the song list to play the Previous track
+        playPreviousSong(songList); // Pass the song list to play the Previous track
     };
 
     return (

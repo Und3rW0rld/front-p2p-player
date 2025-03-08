@@ -1,11 +1,14 @@
 .control-icon {
   img {
-    width: 32px;
-    height: 32px;
+    width: 25px;
+    height: 25px;
 
     cursor: pointer;
   }
 }
 .previous-button {
-  transform: rotate(180deg);
+  transform: rotateY(180deg);
+}
+.next-button {
+  transform: rotateY(360deg);
 }
