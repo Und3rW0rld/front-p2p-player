@@ -14,11 +14,14 @@ import SearchSong from "./views/SearchSong/SearchSong";
 import NavBar from "./components/navBar/navBar";
 import { useEffect } from "react";
 import MainPlayer from "./views/MainPlayer/MainPlayer";
+import Player from "./components/player/player";
 
 function Layout() {
   const location = useLocation();
   const noNavBarRoutes = ["/login", "/register"];
+  const noPlayerRoutes = ["/login", "/register", "/player"];
   const hideNavBar = noNavBarRoutes.includes(location.pathname);
+  const hidePlayer = noPlayerRoutes.includes(location.pathname);
 
   useEffect(() => {
     document.body.classList.toggle("no-navbar", hideNavBar);
@@ -27,6 +30,7 @@ function Layout() {
   return (
     <div className="app-container">
       {!hideNavBar && <NavBar />}
+      {!hidePlayer && <Player />}
       <div className="content">
         <Routes>
           <Route path="/login" element={<Login />} />

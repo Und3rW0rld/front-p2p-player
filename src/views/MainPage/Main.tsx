@@ -23,7 +23,6 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import Player from "../../components/player/player";
 
 
 const Main: React.FC = () => {
@@ -87,7 +86,6 @@ useEffect(() => {
   return (
     <>
       <StoriesBar />
-      <Player />
       <FriendsButton />
       <div className="main-page-container">
         <div className="main-page-header">
