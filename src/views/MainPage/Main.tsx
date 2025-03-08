@@ -61,7 +61,7 @@ useEffect(() => {
   setSongs(updatedSongs);
 }, [files, metadata]);
   const getSongPos = (id: number): number => {
-    return songs.findIndex((song: Song) => song.id === id.toString());
+    return songs.findIndex((song: Song) => song._id === id.toString());
   };
 
   const handleDragEnd = (event: any) => {
