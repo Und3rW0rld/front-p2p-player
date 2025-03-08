@@ -43,7 +43,7 @@ useEffect(() => {
  
 
     return {
-      id: path, // Use file path as a unique ID
+      _id: path, // Use file path as a unique ID
       title: fileMetadata?.title || "Unknown Title",
       artist: fileMetadata?.artist || "Unknown Artist",
       image: fileMetadata?.image || "https://picsum.photos/200/200", // Default placeholder image
