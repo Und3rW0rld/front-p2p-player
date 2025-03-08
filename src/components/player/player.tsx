@@ -1,72 +1,61 @@
+import "./player.css";
 import React, { useState } from "react";
-import EditSquare from "../../assets/icons/edit-square.svg";
-import './player.css';
 
-interface PlayerProps {
 
-}
+
+import ShuffleIcon from "../../assets/icons/shuffle.svg";
+
+
+
+
+
+import PlayCurrentSong from "../songControls/PlayCurrentSong";
+import StopCurrentSong from "../songControls/StopCurrentSong";
+import PlayNextSong from "../songControls/PlayNextSong";
+import PlayPreviousSong from "../songControls/PlayPreviousSong";
+import Restart from "../songControls/Restart.tsx";
+import Mute from "../songControls/Mute.tsx"
+
+import { useFileContext } from "../../providers/FileProvider";
+
+interface PlayerProps {}
 
 const Player: React.FC<PlayerProps> = () => {
-
-  const [isPlaying, setPlaying] = useState(false);
+  const { isSongPlaying, currentSong, metadata} = useFileContext();
   const [isMuted, setMuted] = useState(false);
 
   const shuffle = () => {
-    console.log('shuffle!')
-  }
+    console.log("shuffle!");
+  };
 
-  const previousSong = () => {
-    console.log('previous song!')
-  }
-
-  const nextSong = () => {
-    console.log('next song!')
-  }
-
-
-  const play = () => {
-    setPlaying(!isPlaying)
-  }
+  
 
   const mute = () => {
     setMuted(!isMuted);
-  }
+  };
 
-
-  const replay = () => {
-    
-  }
-
+  const currentSongMetadata = currentSong ? metadata.get(currentSong) : null;
+  const currentSongImage = currentSongMetadata?.image || "https://cdn-icons-png.flaticon.com/512/44/44091.png"; // Default placeholder
 
   return (
-    <>
-      <div className="player-wrapper">
-        <div className="player">
-          <div className="actions">
-            <img src="/src/assets/img/userProfilePicMock.jpg" alt="Profile image" className="profile-image" />
-            <img src="/src/assets/icons/shuffle.svg" alt="Shuffle" className="shuffle" onClick={shuffle} />
-            <img src="/src/assets/icons/next.svg" alt="Previous" className="previous" onClick={previousSong}/>
-            {
-              !isPlaying
-               ? <img src="/src/assets/icons/play.svg" alt="Play" className="play" onClick={play} />
-               : <img src="/src/assets/icons/pause.svg" alt="Play" className="play" onClick={play} />
-            }
-            <img src="/src/assets/icons/next.svg" alt="Next" className="next" onClick={nextSong} />
-            <img src="/src/assets/icons/replay.svg" alt="Next" className="replay" onClick={replay} />
-            {
-              !isMuted
-               ? <img src="/src/assets/icons/speaker.svg" alt="Next" className="speaker" onClick={mute} />
-               : <img src="/src/assets/icons/speaker-muted.svg" alt="Next" className="speaker" onClick={mute} />
-            }
-          </div>
-          <div className="progress">
-            <div className="progress-line">
-              <div className="current-progress" style={{width: '80%'}}></div>
-            </div>
-          </div>
+    <div className="player-wrapper">
+      <div className="player">
+        <div className="actions">
+          <img src={currentSongImage} alt="Song Cover" className="profile-image" />
+          
+          <PlayPreviousSong/>
+          {isSongPlaying ? (
+            <StopCurrentSong/>
+          ) : (
+            <PlayCurrentSong/>
+          )}
+          <PlayNextSong/>
+          <Restart/>
+          <Mute/>
         </div>
+        
       </div>
-    </>
+    </div>
   );
 };
 
