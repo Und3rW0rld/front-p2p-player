@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback , useRef, useEffect} from "react";
+import { createContext, useContext, useState, useCallback ,  useEffect} from "react";
 import { parseBlob } from "music-metadata";
 import { Song } from "../types";
 
@@ -52,6 +52,9 @@ interface FileContextType {
     currentSong: string | null;
     setCurrentSong: (path: string | null) => void;
     playNextSong: (songs: Song[]) => void;
+    playCurrentSong: () => void;
+    stopCurrentSong: () => void;
+    isSongPlaying: boolean;
     
 }
 
@@ -63,9 +66,10 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [files, setFiles] = useState<Map<string, File>>(new Map());
     const [metadata, setMetadata] = useState<Map<string, FileMetadata>>(new Map());
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
+    const [isSongPlaying, setIsSongPlaying] = useState<boolean>(false);
     
     const [currentSong, setCurrentSong] = useState<string | null>(null);
-    const audioRef = useRef<HTMLAudioElement>(null);
+
 
     const audioElement = document.getElementById("global-audio") as HTMLAudioElement;
 
@@ -84,6 +88,7 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const objectUrl = URL.createObjectURL(file);
         audioElement.src = objectUrl;
         audioElement.play();
+        setIsSongPlaying(true);
     
         // ✅ Listen for when the song finishes
         const handleSongEnd = () => {
@@ -98,8 +103,8 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 album: data.album || "Unknown Album",
                 duration: data.duration ? `${Math.floor(data.duration / 60)}:${Math.floor(data.duration % 60).toString().padStart(2, "0")}` : "0:00",
             }));
-    
-            playNextSong(songList); // ✅ Now passing a proper Song[] array
+            setIsSongPlaying(false);
+            playNextSong(songList); 
         };
     
         audioElement.addEventListener("ended", handleSongEnd);
@@ -110,6 +115,9 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
     }, [currentSong]); // Only runs when the song changes
 
+
+    //Song Controls
+
     const playNextSong = (songs: Song[]) => {
         if (!currentSong) return;
     
@@ -117,8 +125,24 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (currentIndex !== -1 && currentIndex < songs.length - 1) {
             const nextSong = songs[currentIndex + 1];
             setCurrentSong(nextSong.id);
+            setIsSongPlaying(true);
         } else {
-            console.log("🚀 End of playlist or song not found.");
+            console.log("End of playlist or song not found.");
+        }
+    };
+
+    const playCurrentSong = () => {
+        if (audioElement && currentSong) {
+            audioElement.play().catch(err => console.error("Error playing audio:", err));
+            setIsSongPlaying(true);
+        }
+    };
+    
+    const stopCurrentSong = () => {
+        if (audioElement) {
+            audioElement.pause();
+            setIsSongPlaying(false);
+            // audioElement.currentTime = 0; // Reset to beginning
         }
     };
     
@@ -229,7 +253,9 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
             currentSong,
             setCurrentSong,
             playNextSong,
-            
+            playCurrentSong,
+            stopCurrentSong,
+            isSongPlaying
         }}>
             {children}
             
