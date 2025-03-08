@@ -1,5 +1,5 @@
+import { useStories } from "../../context/StoriesContext";
 import { Story } from "../../types";
-import usersData from "../../assets/mocks/users.json";
 import songs from "../../assets/mocks/songs.json";
 import "./StoryViewer.css";
 
@@ -8,14 +8,25 @@ interface StoryViewerProps {
 }
 
 const StoryViewer: React.FC<StoryViewerProps> = ({ story }) => {
-    const user = usersData[story.idUser as keyof typeof usersData] || {
+    const { users } = useStories();
+
+    // Buscar el usuario usando `_id`
+    const user = users.find((u) => u._id === story.idUser) || {
         userName: "Usuario desconocido",
         image: "/assets/img/default-user.jpg",
     };
 
+    // Buscar la canción usando `_id`
     const song = story.idSong
-        ? songs[story.idSong as keyof typeof songs] || { name: "Canción desconocida", author: "Artista desconocido" }
+        ? songs.find((s) => s._id === story.idSong) || { 
+            title: "Canción desconocida", 
+            artist: "Artista desconocido",
+            album: "Álbum desconocido",
+            image: "/assets/img/default-song.jpg"
+        }
         : null;
+
+    console.log(song); 
 
     return (
         <div className="story-viewer-container">
@@ -29,16 +40,17 @@ const StoryViewer: React.FC<StoryViewerProps> = ({ story }) => {
                 </div>
                 {song && (
                     <div className="story-music">
-                        <img src={song.image} alt={song.name} className="song-story-image" />
+                        <img src={song.image} alt={song.title} className="song-story-image" />
                         <div className="song-info">
-                            <p className="song-title">{song.name}</p>
-                            <p className="song-artist">{song.author}</p>
+                            <p className="song-title">{song.title}</p>
+                            <p className="song-artist">{song.artist}</p>
                             <p className="song-album">{song.album}</p>
                         </div>
                     </div>
                 )}
             </div>
-        </div>);
+        </div>
+    );
 };
 
 export default StoryViewer;

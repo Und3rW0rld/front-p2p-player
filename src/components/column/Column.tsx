@@ -33,9 +33,9 @@ const Column: FC<ColumnProps> = ({ songs }) => {
           <SortableContext items={songs} strategy={verticalListSortingStrategy}>
             {songs.map((song) => (
               <SongComponent
-                key={song.id}
+                key={song._id}
 
-                id={song.id}
+                id={song._id}
                 image={song.image || ""}
                 name={song.title || "Unknown Title"}
                 author={song.artist || "Unknown Artist"}

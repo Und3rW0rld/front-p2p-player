@@ -12,6 +12,7 @@ import {Song} from "../../types";
 import Column from "../../components/column/Column";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import Upload from "../../assets/icons/upload.svg";
+import FriendsButton from '../../components/friendsButton/FriendsButton';
 
 import {
   closestCorners,
@@ -43,7 +44,7 @@ useEffect(() => {
  
 
     return {
-      id: path, // Use file path as a unique ID
+      _id: path, // Use file path as a unique ID
       title: fileMetadata?.title || "Unknown Title",
       artist: fileMetadata?.artist || "Unknown Artist",
       image: fileMetadata?.image || "https://picsum.photos/200/200", // Default placeholder image
@@ -87,6 +88,7 @@ useEffect(() => {
     <>
       <StoriesBar />
       <Player />
+      <FriendsButton />
       <div className="main-page-container">
         <div className="main-page-header">
           <div className="left">

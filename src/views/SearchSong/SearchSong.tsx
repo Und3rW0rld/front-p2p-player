@@ -13,41 +13,42 @@ const SearchSong = () => {
     const [searchTerm, setSearchTerm] = useState(songName.toLowerCase() || "");
 
     useEffect(() => {
-        const navigationType = (performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming).type;
-        if (navigationType === "reload") {
-            setSearchTerm(""); // Limpia el término de búsqueda si la página se recarga
-        }
-    }, []);
-
-    useEffect(() => {
         if (songName && searchTerm === "") {
             setSearchTerm(songName.toLowerCase());
         }
     }, [songName]);
 
-    // Manejo del cambio en la barra de búsqueda
+
+
     const handleSearch = (term: string) => {
         setSearchTerm(term.toLowerCase());
     };
 
-    // Convertimos songFiles en un array de objetos
+    const songsMap: Record<string, { title: string }> = (songsData as any[]).reduce((acc, song) => {
+        acc[song._id] = song;
+        return acc;
+    }, {});
+
+    const usersMap: Record<string, { userName: string }> = (usersData as any[]).reduce((acc, user) => {
+        acc[user._id] = user;
+        return acc;
+    }, {});
+
     const songFilesArray = Object.entries(songFiles).map(([key, value]) => ({
         id: key,
         ...value,
     }));
 
-    // Filtrado basado en el término de búsqueda
     const filteredSongs = songFilesArray.filter((songFile) => {
-        const song = songsData[songFile.idSong as keyof typeof songsData];
-        return song?.name.toLowerCase().includes(searchTerm);
+        const song = songsMap[songFile.idSong];
+        return song?.title.toLowerCase().includes(searchTerm);
     });
 
     return (
         <div className="search-song-page-container">
             <div className="search-song-wrapper">
-                {/* Barra de búsqueda */}
+                {/* Barra de búsqueda ahora se actualiza correctamente con `searchTerm` */}
                 <SearchBar placeholder="Buscar canción..." defaultInput={searchTerm} onSearch={handleSearch} />
-
                 <div className="search-song-container">
                     <table className="search-song-table">
                         <thead>
@@ -61,18 +62,18 @@ const SearchSong = () => {
                         </thead>
                         <tbody>
                             {filteredSongs.map((songFile) => {
-                                const song = songsData[songFile.idSong as keyof typeof songsData];
-                                const user = usersData[songFile.idUser as keyof typeof usersData];
+                                const song = songsMap[songFile.idSong];
+                                const user = usersMap[songFile.idUser];
 
                                 return (
                                     <tr key={songFile.id}>
-                                        <td>{song?.name || "Desconocido"}</td>
+                                        <td>{song?.title || "Desconocido"}</td>
                                         <td>@{user?.userName || "Anónimo"}</td>
                                         <td>{songFile.fileSize}</td>
                                         <td className="file-name">{songFile.fileName}</td>
                                         <td>
                                             <button className="download-button">
-                                                <FaDownload />
+                                                <FaDownload onClick={() => {}} />
                                             </button>
                                         </td>
                                     </tr>

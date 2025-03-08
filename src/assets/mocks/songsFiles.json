@@ -1,22 +1,23 @@
-{
-    "1": {
+[
+    {
+        "_id": "1",
         "idSong": "1",
         "idUser": "1",
         "fileSize": "1.2MB",
         "fileName": "song1adsfasdfaasdfasdfasdf.mp3"
     },
-
-    "2": {
+    {
+        "_id": "2",
         "idSong": "2",
         "idUser": "1",
         "fileSize": "1.5MB",
         "fileName": "song2.mp3"
     },
-
-    "3": {
+    {
+        "_id": "3",
         "idSong": "3",
         "idUser": "2",
         "fileSize": "1.8MB",
         "fileName": "song3.mp3"
     }
-}
+]
