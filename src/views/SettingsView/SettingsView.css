@@ -103,6 +103,21 @@ h2 {
     width: 100%;
     display: flex;
     justify-content: center;
+}
+.buton-container{
+    display: flex;
+    justify-content: center;
     margin-top: 20px;
+    gap: 350px;
+}
+
+.logout-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.logout-container button:hover {
+    background-color: red; /* Color más oscuro al pasar el mouse */
 }
 }

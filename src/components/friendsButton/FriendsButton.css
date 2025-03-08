@@ -1,11 +1,11 @@
-.friends-button-container {
+/* Contenedor del botón */
+.friends-container {
   position: fixed;
-  top: 55%;
-  left: 0;
-  transform: translateY(-50%);
+  background-color: var(--background-color);
   z-index: 1000;
 }
 
+/* Botón de amigos */
 .friends-button {
   background-color: #0d1b2a;
   color: white;
@@ -21,19 +21,22 @@
   background-color: #1b263b;
 }
 
+/* Panel de amigos */
 .friends-panel {
-  position: relative;
-  top: 10px;
-  left: -360px;
+  position: fixed;
+  top: 55%;
+  left: -360px; /* Oculto por defecto */
+  transform: translateY(-50%);
   width: 350px;
-  max-height: 500px; /* Tamaño fijo */
+  max-height: 430px;
   box-shadow: var(--box-shadow-primary);
   border-radius: 0 8px 8px 0;
   transition: left 0.3s ease-in-out;
-  overflow-y: auto; /* Permitir desplazamiento vertical */
+  overflow-y: auto;
   background-color: var(--background-color);
 }
 
+/* Panel abierto */
 .friends-panel.open {
   left: 0;
 }

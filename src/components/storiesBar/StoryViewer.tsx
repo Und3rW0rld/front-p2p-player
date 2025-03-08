@@ -26,8 +26,6 @@ const StoryViewer: React.FC<StoryViewerProps> = ({ story }) => {
         }
         : null;
 
-    console.log(song); 
-
     return (
         <div className="story-viewer-container">
             <div className="story-viewer">
