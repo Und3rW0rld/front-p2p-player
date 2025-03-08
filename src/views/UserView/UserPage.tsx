@@ -27,13 +27,13 @@ const UserPage = () => {
                 image={userImg}
                 banner={userBanner}/>
 
-            <div className="top-songs-container">
+            {/* <div className="top-songs-container">
                 <h1 >
                     {userName} TOP 3 SONGS
                     <img src = {EditButtonSVG} className="edit-icon"/>
                 </h1>
                 <TopSongs topSongs={topSongs}/>
-            </div>
+            </div> */}
 
             <div className="user-playlists-container">
                 <UserPlaylists userName={userName}/>

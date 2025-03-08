@@ -5,6 +5,7 @@ export interface Song {
   image?: string;
   album?: string;
   duration?: string;
+  fileSize?: string;
 }
 
 export interface User {
