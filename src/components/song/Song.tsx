@@ -11,9 +11,10 @@ interface SongProps {
   album: string;
   duration: string;
   asTableRow?: boolean; // Differentiates between table row and default layout
+  fileSize?: string
 }
 
-const SongComponent: React.FC<SongProps> = ({ id, image, name, author, album, duration, asTableRow }) => {
+const SongComponent: React.FC<SongProps> = ({ id, image, name, author, album, duration, fileSize}) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
       id,
       disabled: false
@@ -24,40 +25,36 @@ const SongComponent: React.FC<SongProps> = ({ id, image, name, author, album, du
     transition,
   };
 
-  if (asTableRow) {
-    return (
-      <tr ref={setNodeRef} style={style}>
-  {/* Drag Handle Column */}
-  <td {...attributes} {...listeners} style={{ cursor: "grab" }}>
-    ⠿ {/* Unicode for drag handle icon */}
-  </td>
   
-  {/* Play Button Column */}
-  <td>
-    <PlaySong songPath={id} />
-  </td>
-
-  {/* Image Column */}
-  <td>
-    <img src={image} alt={name} className="song-image" />
-  </td>
-
-  {/* Song Details Columns */}
-  <td>{name}</td>
-  <td>{author}</td>
-  <td>{album}</td>
-  <td>{duration}</td>
-</tr>
-
-    );
-  }
-
-  // Default: Render as a normal list item (if needed elsewhere)
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <p>{name} - {author}</p>
-    </div>
+    <tr ref={setNodeRef} style={style}>
+      {/* Drag Handle Column */}
+      <td {...attributes} {...listeners} style={{ cursor: "grab" }}>
+        ⠿ {/* Unicode for drag handle icon */}
+      </td>
+  
+
+      <td>
+        <PlaySong songPath={id} />
+      </td>
+
+
+      <td>
+        <img src={image} alt={name} className="song-image" />
+      </td>
+
+      <td>{name}</td>
+      <td>{author}</td>
+      <td>{album}</td>
+      <td>{duration}</td>
+      <td></td>
+      
+    </tr>
+
   );
+  
+
+ 
 };
 
 export default memo(SongComponent);

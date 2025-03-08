@@ -14,7 +14,7 @@ const NextSongButton: React.FC = () => {
             console.warn("No songs available to play.");
             return;
         }
-        playNextSong(songList); // Pass the song list to play the next track
+        playNextSong(); // Pass the song list to play the next track
     };
 
     return (

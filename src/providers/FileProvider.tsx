@@ -52,13 +52,13 @@ interface FileContextType {
     currentSong: string | null;
 
     setCurrentSong: (path: string | null) => void;
-    playNextSong: (songs: Song[]) => void;
-    playPreviousSong: (songs: Song[]) => void;
+    playNextSong: () => void;
+    playPreviousSong: () => void;
     playCurrentSong: () => void;
     stopCurrentSong: () => void;
     restartCurrentSong: () => void;
     mutePlayingSong: () => void;
-    
+    setSongList: (songs: Song[]) => void;
 
     isSongPlaying: boolean;
     isMuted: boolean;
@@ -81,20 +81,28 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 
     const [currentSong, setCurrentSong] = useState<string | null>(null);
-
+    
 
     const audioElement = document.getElementById("global-audio") as HTMLAudioElement;
+    const [songList, setSongList] = useState<Song[]>([]);
 
-    const songList: Song[] = Array.from(metadata.entries()).map(([path, data]) => ({
-        id: path,
-        title: data.title || "Unknown Title",
-        artist: data.artist || "Unknown Artist",
-        image: data.image || "",
-        album: data.album || "Unknown Album",
-        duration: data.duration
-            ? `${Math.floor(data.duration / 60)}:${Math.floor(data.duration % 60).toString().padStart(2, "0")}`
-            : "0:00",
-    }));
+    // Populate songList when metadata changes (only the first time)
+    useEffect(() => {
+        if (songList.length === 0 && metadata.size > 0) {
+            setSongList(
+                Array.from(metadata.entries()).map(([path, data]) => ({
+                    id: path,
+                    title: data.title || "Unknown Title",
+                    artist: data.artist || "Unknown Artist",
+                    image: data.image || "",
+                    album: data.album || "Unknown Album",
+                    duration: data.duration
+                        ? `${Math.floor(data.duration / 60)}:${Math.floor(data.duration % 60).toString().padStart(2, "0")}`
+                        : "0:00",
+                }))
+            );
+        }
+    }, [metadata]); 
     
 
     // Function to check if file is a music file
@@ -118,7 +126,7 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const handleSongEnd = () => {
             console.log("🎵 Song ended. Playing next song...");
             setIsSongPlaying(false);
-            playNextSong(songList); 
+            playNextSong(); 
         };
     
         audioElement.addEventListener("ended", handleSongEnd);
@@ -133,12 +141,12 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     //Song Controls
 
-    const playNextSong = (songs: Song[]) => {
+    const playNextSong = () => {
         if (!currentSong) return;
     
-        const currentIndex = songs.findIndex(song => song.id === currentSong);
-        if (currentIndex !== -1 && currentIndex < songs.length - 1) {
-            const nextSong = songs[currentIndex + 1];
+        const currentIndex = songList.findIndex(song => song.id === currentSong);
+        if (currentIndex !== -1 && currentIndex < songList.length - 1) {
+            const nextSong = songList[currentIndex + 1];
             setCurrentSong(nextSong.id);
             setIsSongPlaying(true);
         } else {
@@ -146,12 +154,12 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     };
 
-    const playPreviousSong = (songs: Song[]) => {
+    const playPreviousSong = () => {
         if (!currentSong) return;
     
-        const currentIndex = songs.findIndex(song => song.id === currentSong);
+        const currentIndex = songList.findIndex(song => song.id === currentSong);
         if (currentIndex !== -1 && currentIndex > 0) {
-            const prevSong = songs[currentIndex - 1];
+            const prevSong = songList[currentIndex - 1];
             setCurrentSong(prevSong.id);
             
         } else {
@@ -311,7 +319,7 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
             restartCurrentSong,
             mutePlayingSong,
             isSongPlaying,
-            
+            setSongList,
             isMuted,
             songList
         }}>
