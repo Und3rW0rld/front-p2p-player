@@ -21,11 +21,11 @@ const NavBar = () => {
                         <FaHome />
                     </NavLink>
                 </li>
-                <li>
+                {/* <li>
                     <NavLink to="/play" className="nav-icon">
                         <FaPlay />
                     </NavLink>
-                </li>
+                </li> */}
                 <li>
                     <NavLink to="/searchSong" className="nav-icon">
                         <FaSearch />
