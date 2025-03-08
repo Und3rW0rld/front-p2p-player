@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, useCallback , useRef} from "react";
+import { createContext, useContext, useState, useCallback , useRef, useEffect} from "react";
 import { parseBlob } from "music-metadata";
+import { Song } from "../types";
 
 
 // Type definitions for the File System Access API
@@ -37,6 +38,7 @@ interface FileMetadata {
     album?: string;
     duration?: number;
     format?: string;
+
 }
 
 
@@ -49,7 +51,8 @@ interface FileContextType {
     isProcessing: boolean;
     currentSong: string | null;
     setCurrentSong: (path: string | null) => void;
-    audioRef: React.RefObject<HTMLAudioElement>;
+    playNextSong: (songs: Song[]) => void;
+    
 }
 
 const FileContext = createContext<FileContextType | null>(null);
@@ -64,11 +67,61 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [currentSong, setCurrentSong] = useState<string | null>(null);
     const audioRef = useRef<HTMLAudioElement>(null);
 
+    const audioElement = document.getElementById("global-audio") as HTMLAudioElement;
+
     // Function to check if file is a music file
     const isMusicFile = (filename: string): boolean => {
         return /\.(FLAC|M4A|MP3)$/i.test(filename);
     };
 
+
+    useEffect(() => {
+        if (!audioElement || !currentSong) return;
+    
+        const file = files.get(currentSong);
+        if (!file) return;
+    
+        const objectUrl = URL.createObjectURL(file);
+        audioElement.src = objectUrl;
+        audioElement.play();
+    
+        // ✅ Listen for when the song finishes
+        const handleSongEnd = () => {
+            console.log("🎵 Song ended. Playing next song...");
+    
+            // Convert metadata map to an array of Song[]
+            const songList: Song[] = Array.from(metadata.entries()).map(([path, data]) => ({
+                id: path, // Path is the unique ID
+                title: data.title || "Unknown Title",
+                artist: data.artist || "Unknown Artist",
+                image: data.image || "",
+                album: data.album || "Unknown Album",
+                duration: data.duration ? `${Math.floor(data.duration / 60)}:${Math.floor(data.duration % 60).toString().padStart(2, "0")}` : "0:00",
+            }));
+    
+            playNextSong(songList); // ✅ Now passing a proper Song[] array
+        };
+    
+        audioElement.addEventListener("ended", handleSongEnd);
+    
+        return () => {
+            URL.revokeObjectURL(objectUrl);
+            audioElement.removeEventListener("ended", handleSongEnd);
+        };
+    }, [currentSong]); // Only runs when the song changes
+
+    const playNextSong = (songs: Song[]) => {
+        if (!currentSong) return;
+    
+        const currentIndex = songs.findIndex(song => song.id === currentSong);
+        if (currentIndex !== -1 && currentIndex < songs.length - 1) {
+            const nextSong = songs[currentIndex + 1];
+            setCurrentSong(nextSong.id);
+        } else {
+            console.log("🚀 End of playlist or song not found.");
+        }
+    };
+    
     // Process a file to extract metadata and add to state
     const processFile = async (path: string, file: File) => {
     try {
@@ -175,10 +228,11 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
             isProcessing,
             currentSong,
             setCurrentSong,
-            audioRef
+            playNextSong,
+            
         }}>
             {children}
-            <audio ref={audioRef} /> {/* Global audio element */}
+            
         </FileContext.Provider>
     );
 };

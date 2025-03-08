@@ -9,45 +9,24 @@ interface SongPlayProps {
 }
 
 const PlaySong: React.FC<SongPlayProps> = ({ songPath }) => {
-  const { files, currentSong, setCurrentSong, audioRef} = useFileContext();
+  const { files, currentSong, setCurrentSong} = useFileContext();
   const [objectUrl, setObjectUrl] = useState<string | null>(null);
 
 
   const playFile = (path: string) => {
     console.log("Attempting to play:", path);
-  
+
     const file = files.get(path);
     if (!file) {
       console.error("File not found in context:", path);
       return;
     }
 
-    console.log("File found:", file);
-
-    if (audioRef.current) {
-      const newObjectUrl = URL.createObjectURL(file);
-      audioRef.current.src = newObjectUrl;
-      audioRef.current.load();
-      audioRef.current.volume = 1;
-      audioRef.current.play()
-        .then(() => console.log("Playback started"))
-        .catch(error => console.error("Error playing audio:", error));
-
-      setCurrentSong(path); // Update global state
-    } else {
-      console.error("Audio element not found");
-    }
+    setCurrentSong(path); // Set the song in global state (FileProvider will handle playback)
   };
   
 
-  // Cleanup object URL when component unmounts or song changes
-  useEffect(() => {
-    return () => {
-      if (objectUrl) {
-        URL.revokeObjectURL(objectUrl);
-      }
-    };
-  }, [objectUrl]);
+  
 
   return (
     <div className="play-song">
@@ -59,7 +38,7 @@ const PlaySong: React.FC<SongPlayProps> = ({ songPath }) => {
       }}
       style={{ opacity: currentSong === songPath ? 1 : 0.5 }} // Highlight current song
     />
-      <audio ref={audioRef} />
+
     </div>
   );
 };
